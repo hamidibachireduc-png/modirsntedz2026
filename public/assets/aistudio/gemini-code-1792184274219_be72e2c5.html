@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة التوقيت الأسبوعي الرسمي 2026/2027 - إعداد الأستاذ حميدي البشير</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@500;700;900&family=Changa:wght@500;700;800&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --green-snte: #117a37;
+            --green-dark: #094d22;
+            --green-light: #e8f5e9;
+            --red-snte: #d91424;
+            --red-dark: #9e0b17;
+            --red-light: #ffebee;
+            --gold-snte: #e6b85c;
+            --app-font: 'Cairo', 'Traditional Arabic', Tahoma, sans-serif;
+            --table-font-scale: 13px;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: var(--app-font);
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #111827;
+            margin: 0;
+            padding: 0;
+        }
+
+        .snte-header {
+            background: linear-gradient(135deg, #073818 0%, var(--green-snte) 52%, var(--red-snte) 100%);
+            color: white;
+            padding: 16px 24px;
+            border-bottom: 5px solid var(--gold-snte);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+        }
+
+        .header-grid {
+            max-width: 1560px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .snte-logo-wrapper {
+            width: 82px;
+            height: 82px;
+            background: #ffffff;
+            border-radius: 50%;
+            border: 3px solid var(--gold-snte);
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .snte-logo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .title-box h1 {
+            margin: 0;
+            font-size: 1.45rem;
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .author-credit-banner {
+            display: inline-block;
+            margin-top: 5px;
+            background: rgba(0, 0, 0, 0.55);
+            border-right: 4px solid var(--gold-snte);
+            border-left: 4px solid var(--red-snte);
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: #fef08a;
+            letter-spacing: 0.3px;
+            user-select: none;
+        }
+
+        .title-box p {
+            margin: 5px 0 0 0;
+            font-size: 0.82rem;
+            opacity: 0.95;
+        }
+
+        .font-Selector-frame {
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--gold-snte);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .font-Selector-frame label {
+            color: #fef08a;
+            font-size: 0.82rem;
+            font-weight: 800;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .font-Selector-frame select {
+            width: auto;
+            min-width: 165px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #fff;
+            font-weight: 700;
+            font-size: 0.84rem;
+            background: white;
+            color: var(--green-dark);
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 9px 15px;
+            border-radius: 7px;
+            font-weight: 800;
+            font-size: 0.84rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-red { background: var(--red-snte); color: white; border: 1.5px solid #fff; }
+        .btn-red:hover { background: var(--red-dark); }
+        .btn-green { background: var(--green-snte); color: white; border: 1.5px solid #fff; }
+        .btn-green:hover { background: var(--green-dark); }
+        .btn-gold { background: #f59e0b; color: #000; border: 1.5px solid #fff; }
+
+        .workspace {
+            max-width: 1560px;
+            margin: 18px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 395px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1220px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        .side-panel {
+            background: white;
+            border-radius: 12px;
+            border-top: 6px solid var(--green-snte);
+            border-bottom: 6px solid var(--red-snte);
+            padding: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        }
+
+        .locked-copyright-badge {
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
+            border-right: 4px solid var(--green-snte);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            user-select: none;
+        }
+
+        .locked-copyright-badge span.lock-tag {
+            background: var(--red-snte);
+            color: #fff;
+            font-size: 0.68rem;
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 900;
+        }
+
+        .snte-promo-box {
+            background: linear-gradient(135deg, #063d1b 0%, #0d682f 100%);
+            color: #ffffff;
+            border: 2px solid var(--gold-snte);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+            text-align: center;
+        }
+
+        .snte-promo-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fef08a;
+            font-weight: 900;
+            font-size: 0.92rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--gold-snte);
+            margin-bottom: 8px;
+        }
+
+        .snte-promo-text {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .snte-promo-price {
+            background: var(--red-snte);
+            color: #ffffff;
+            padding: 1px 6px;
+            border-radius: 5px;
+            font-weight: 900;
+            border: 1px solid #ffffff;
+        }
+
+        .snte-promo-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .promo-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 5px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 0.74rem;
+            text-decoration: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.22);
+            white-space: nowrap;
+        }
+
+        .promo-btn-gold { background: #deb041; color: #000000; border: 1.5px solid #fef08a; }
+        .promo-btn-green { background: #0d8a3e; color: #ffffff; border: 1.5px solid #4ade80; }
+
+        .tabs-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            background: #e2e8f0;
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+        }
+
+        .tab-btn {
+            padding: 8px 4px;
+            border: none;
+            background: transparent;
+            font-weight: 800;
+            font-size: 0.78rem;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #334155;
+        }
+
+        .tab-btn.active {
+            background: var(--green-snte);
+            color: white;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .field-group { margin-bottom: 10px; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            margin-bottom: 4px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 7px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .info-card {
+            background: var(--green-light);
+            border-right: 4px solid var(--green-snte);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+
+        .info-card.red-alert {
+            background: var(--red-light);
+            border-right-color: var(--red-snte);
+            color: #7f1d1d;
+        }
+
+        .scroll-box {
+            max-height: 255px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px;
+            background: #f8fafc;
+            margin-bottom: 10px;
+        }
+
+        .item-card {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-right: 4px solid var(--green-snte);
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .item-card.rank-top { border-right-color: var(--red-snte); }
+
+        .badge-rank {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: white;
+            margin-right: 4px;
+        }
+
+        .r-مميز { background: var(--red-snte); }
+        .r-ثان { background: var(--green-snte); }
+        .r-أول { background: #0284c7; }
+        .r-ابتدائي { background: #64748b; }
+
+        .level-selector-strip {
+            background: white;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            border-right: 5px solid var(--green-snte);
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pills-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .level-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1.5px solid var(--green-snte);
+            background: white;
+            color: var(--green-dark);
+            font-weight: 800;
+            font-size: 0.78rem;
+            cursor: pointer;
+        }
+
+        .level-pill.active {
+            background: var(--red-snte);
+            border-color: var(--red-snte);
+            color: white;
+        }
+
+        .a4-landscape-page {
+            background: white;
+            width: 297mm;
+            min-height: 202mm;
+            margin: 0 auto;
+            padding: 6mm 8mm;
+            border: 1px solid #94a3b8;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            position: relative;
+        }
+
+        @media screen and (max-width: 1400px) {
+            .sheet-scroll-container { overflow-x: auto; padding-bottom: 15px; }
+        }
+
+        .sheet-header-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.35fr 1fr;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: var(--table-font-scale);
+            font-weight: 800;
+            line-height: 1.45;
+        }
+
+        .sheet-right-col { text-align: start; }
+        .sheet-left-col { text-align: start; padding-inline-start: 20px; }
+
+        .sheet-center-col {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rep-heading {
+            font-size: calc(var(--table-font-scale) + 2px);
+            font-weight: 900;
+            color: var(--green-dark);
+        }
+
+        .min-heading {
+            font-size: calc(var(--table-font-scale) + 1px);
+            font-weight: 800;
+            color: var(--red-snte);
+            margin-bottom: 4px;
+        }
+
+        .title-frame-with-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid var(--green-snte);
+            background: linear-gradient(to left, var(--green-light), #ffffff, var(--red-light));
+            padding: 3px 18px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 0px var(--red-snte);
+        }
+
+        .title-frame-with-logo img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #ffffff;
+            border: 1.5px solid var(--gold-snte);
+        }
+
+        .title-frame-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-doc-title {
+            font-size: calc(var(--table-font-scale) + 2px);
+            font-weight: 900;
+            color: #000;
+        }
+
+        table.summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 7px;
+            text-align: center;
+            font-size: calc(var(--table-font-scale) - 1px);
+            font-weight: 800;
+        }
+
+        table.summary-table th,
+        table.summary-table td {
+            border: 1.5px solid #000;
+            padding: 3px 4px;
+        }
+
+        table.summary-table th {
+            background-color: var(--green-light);
+            color: var(--green-dark);
+        }
+
+        .highlight-col {
+            background-color: var(--red-light) !important;
+            color: var(--red-dark) !important;
+            font-weight: 900;
+        }
+
+        table.timetable-grid {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            border: 2px solid #000;
+            font-size: var(--table-font-scale);
+        }
+
+        table.timetable-grid th,
+        table.timetable-grid td {
+            border: 1.5px solid #000;
+            padding: 2px 3px;
+            vertical-align: middle;
+        }
+
+        tr.hours-header th {
+            background: var(--green-snte);
+            color: white;
+            font-weight: 900;
+            padding: 5px 4px;
+            white-space: pre-line;
+        }
+
+        td.day-col-cell {
+            background: var(--red-light);
+            color: var(--red-dark);
+            font-weight: 900;
+            font-size: calc(var(--table-font-scale) + 1px);
+            width: 85px;
+        }
+
+        td.vertical-strip {
+            background: var(--green-light);
+            color: var(--green-dark);
+            font-weight: 900;
+            font-size: var(--table-font-scale);
+            width: 34px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .activities-flex {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            min-height: 56px;
+            align-items: stretch;
+        }
+
+        .act-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3px;
+            border-inline-end: 1px dashed #64748b;
+            cursor: grab;
+        }
+
+        .act-box:last-child { border-inline-end: none; }
+        .act-box.w-60 { flex: 2; }
+        .act-box.w-45 { flex: 1.5; }
+        .act-box.w-30 { flex: 1; }
+        .act-box.w-90 { flex: 3; }
+
+        .act-name {
+            font-size: var(--table-font-scale);
+            font-weight: 800;
+            color: #000;
+            line-height: 1.25;
+        }
+
+        .act-time {
+            font-size: calc(var(--table-font-scale) - 1.5px);
+            font-weight: 800;
+            color: var(--red-snte);
+            margin-top: 2px;
+        }
+
+        .bg-arab { background-color: #ffffff; }
+        .bg-math { background-color: #f0fdf4; }
+        .bg-lang { background-color: #fff1f2; }
+        .bg-pe   { background-color: #ecfdf5; }
+        .bg-off  {
+            background-color: #f8fafc;
+            color: var(--green-dark);
+            font-weight: 900;
+        }
+
+        .footer-signatures {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            margin-top: 8px;
+            font-size: calc(var(--table-font-scale) + 1px);
+            font-weight: 900;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 4mm;
+        }
+
+        [contenteditable="true"]:hover {
+            background-color: rgba(0, 255, 0, 0.05);
+            outline: 1px dashed var(--green-snte);
+            cursor: text;
+        }
+
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .workspace { display: block; margin: 0; padding: 0; }
+            .a4-landscape-page {
+                width: 100%;
+                min-height: auto;
+                border: none;
+                box-shadow: none;
+                padding: 2mm;
+                margin: 0;
+            }
+            [contenteditable="true"] { outline: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="snte-header no-print">
+    <div class="header-grid">
+        <div class="brand-section">
+            <div class="snte-logo-wrapper" title="شعار النقابة الوطنية لعمال التربية S.N.T.E">
+                <img id="headerLogoImg" alt="SNTE Logo">
+            </div>
+            <div class="title-box">
+                <h1>منظومة التوقيت الأسبوعي والإسناد العادل للتعليم الابتدائي (نظام الدوام الواحد)</h1>
+                <div class="author-credit-banner" id="headerCreditText">
+                    🔒 من إعداد الأستاذ حميدي البشير - أكتوبر 2026
+                </div>
+                <p>اللجنة الوطنية للتربية والبيداغوجيا - النقابة الوطنية لعمال التربية (S.N.T.E) | تطبيق أحكام المرسوم التنفيذي 25-54</p>
+            </div>
+        </div>
+
+        <div class="font-Selector-frame">
+            <div>
+                <label for="fontFamilySelect">🔤 نوع الخط (تغيير فوري):</label>
+                <select id="fontFamilySelect" onchange="changeUserFont()">
+                    <option value="'Cairo', sans-serif" selected>خط القاهرة (Cairo - عصري رسمي)</option>
+                    <option value="'Amiri', serif">الخط الأميري (Amiri - مطبعي كلاسيكي)</option>
+                    <option value="'Tajawal', sans-serif">خط تجوال (Tajawal - واضح وأنيق)</option>
+                    <option value="'Changa', sans-serif">خط شانغا (Changa - هندسي عريض)</option>
+                    <option value="'Traditional Arabic', serif">الخط العربي التقليدي (Traditional)</option>
+                </select>
+            </div>
+            <div>
+                <label for="fontSizeSelect">📏 حجم خط الجدول:</label>
+                <select id="fontSizeSelect" onchange="changeUserFont()" style="min-width:110px;">
+                    <option value="12px">صغير (12px)</option>
+                    <option value="13px" selected>متوسط مثالي (13px)</option>
+                    <option value="14px">كبير (14px)</option>
+                </select>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn btn-red" onclick="exportLandscapePDF()">📥 تحميل PDF (A4 أفقي)</button>
+                <button class="btn btn-gold" onclick="window.print()">🖨️ طباعة فورية</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="workspace">
+    <aside class="side-panel no-print">
+        <!-- الترتيب من اليمين: 1. الشعار والخيارات | 2. الأساتذة والرتب | 3. الإسناد العادل -->
+        <div class="tabs-bar">
+            <button class="tab-btn active" onclick="openSideTab('tab-custom', this)">1. الشعار والخيارات</button>
+            <button class="tab-btn" onclick="openSideTab('tab-ranks', this)">2. الأساتذة والرتب</button>
+            <button class="tab-btn" onclick="openSideTab('tab-assign', this)">3. الإسناد العادل</button>
+        </div>
+
+        <!-- 1. الشعار والخيارات -->
+        <div id="tab-custom" class="tab-content active">
+            <div class="locked-copyright-badge">
+                <span>© من إعداد الأستاذ حميدي البشير - أكتوبر 2026</span>
+                <span class="lock-tag">🔒 ملكية خاصة</span>
+            </div>
+
+            <div class="field-row">
+                <div>
+                    <label>مديرية التربية لولاية:</label>
+                    <input type="text" id="inpWilaya" value="الأغواط" oninput="renderA4Sheet(); saveInstitutionData();">
+                </div>
+                <div>
+                    <label>مقاطعة التفتيش:</label>
+                    <input type="text" id="inpDistrict" value="الأغواط 01" oninput="renderA4Sheet(); saveInstitutionData();">
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label>المدرسة الابتدائية:</label>
+                <input type="text" id="inpSchool" value="الشهيد أحمد بن عبد الرزاق" oninput="renderA4Sheet(); saveInstitutionData();">
+            </div>
+
+            <div class="field-group">
+                <label>السنة الدراسية:</label>
+                <input type="text" id="inpYear" value="2026 / 2027" oninput="renderA4Sheet(); saveInstitutionData();">
+            </div>
+
+            <div class="field-group">
+                <label>رفع ملف صورة الشعار المرفق (اختياري):</label>
+                <input type="file" accept="image/*" onchange="handleLogoUpload(event)">
+            </div>
+        </div>
+
+        <!-- 2. الأساتذة والرتب -->
+        <div id="tab-ranks" class="tab-content">
+            <div class="info-card red-alert">
+                <strong>⚖️ تصنيف الرتب (المرسوم التنفيذي 25-54):</strong><br>
+                تبدأ المسميات بـ <b>أستاذ تعليم ابتدائي</b> ثم تليها المسميات الأخرى (<b>أستاذ قسم أول</b>، <b>أستاذ قسم ثانٍ</b>، <b>أستاذ مميز</b>).
+            </div>
+
+            <div class="field-group">
+                <label>اسم ولقب الأستاذ(ة):</label>
+                <input type="text" id="inpTName" placeholder="مثال: أ. حميدي البشير / Mme. Amrani">
+            </div>
+
+            <div class="field-row">
+                <div>
+                    <label>الرتبة (المرسوم 25-54):</label>
+                    <select id="inpTRank">
+                        <option value="تعليم ابتدائي" selected>أستاذ تعليم ابتدائي</option>
+                        <option value="قسم أول">أستاذ قسم أول</option>
+                        <option value="قسم ثان">أستاذ قسم ثانٍ</option>
+                        <option value="مميز">أستاذ مميز</option>
+                    </select>
+                </div>
+                <div>
+                    <label>التخصص:</label>
+                    <select id="inpTSpec">
+                        <option value="arabic">لغة عربية</option>
+                        <option value="french">Langue Française (فرنسية)</option>
+                        <option value="english">English Language (إنجليزية)</option>
+                        <option value="amazigh">Tutlayt Tamaziɣt (أمازيغية)</option>
+                        <option value="pe">تربية بدنية ورياضية</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-green" style="width:100%; justify-content:center; margin-bottom:10px;" onclick="addTeacher()">
+                + إضافة أستاذ(ة) للهيئة التربوية
+            </button>
+
+            <label>قائمة الأساتذة والأقسام المسندة:</label>
+            <div class="scroll-box" id="teachersListUI"></div>
+        </div>
+
+        <!-- 3. الإسناد العادل -->
+        <div id="tab-assign" class="tab-content">
+            <div class="field-group">
+                <label>طريقة الإسناد المعتمدة:</label>
+                <select id="assignPolicy" onchange="runFairAssignment()">
+                    <option value="normal">1. الطريقة العادية</option>
+                    <option value="by_rank" selected>2. طريقة أستاذ حسب الرتبة</option>
+                    <option value="exceptional">3. طريقة الإسناد الاستثنائي</option>
+                </select>
+            </div>
+
+            <div class="field-row">
+                <div>
+                    <label>القسم / اللغة المسندة:</label>
+                    <select id="inpGLevel">
+                        <option value="prep">التربية التحضيرية (17 سا)</option>
+                        <option value="1">السنة الأولى ابتدائي (19 سا)</option>
+                        <option value="2">السنة الثانية ابتدائي (19 سا)</option>
+                        <option value="3">السنة الثالثة ابتدائي (17 سا)</option>
+                        <option value="4">السنة الرابعة ابتدائي (17 سا)</option>
+                        <option value="5" selected>السنة الخامسة ابتدائي (17 سا)</option>
+                        <option value="fr">Français (3AP / 4AP / 5AP)</option>
+                        <option value="en">English (3PS / 4PS / 5PS)</option>
+                        <option value="tz">Tamaziɣt - الأمازيغية (4AP / 5AP)</option>
+                        <option value="pe">التربية البدنية (س1 إلى س5)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>الحجرة / الأفواج:</label>
+                    <input type="text" id="inpGRoom" value="01">
+                </div>
+            </div>
+
+            <button class="btn btn-green" style="width:100%; justify-content:center; margin-bottom:6px;" onclick="addGroup()">+ إضافة قسم / توقيت لغة جديد</button>
+            <button class="btn btn-red" style="width:100%; justify-content:center; margin-bottom:10px;" onclick="runFairAssignment()">⚖️ تطبيق الإسناد آلياً</button>
+
+            <div class="scroll-box" id="groupsListUI"></div>
+        </div>
+
+        <!-- القسم الترويجي للنقابة SNTE -->
+        <div class="snte-promo-box">
+            <div class="snte-promo-title">
+                <span>🤝</span> انضم للنقابة الوطنية لعمال التربية
+            </div>
+            <p class="snte-promo-text">
+                وللاستفادة ما عليك إلا الانخراط بالنقابة والحصول على بطاقة انخراط بثمن رمزي <span class="snte-promo-price">100 دج</span> ليتم تفعيل استفادتك من خدماتنا الرقمية والنقابية عن طريق منصة الانخراط الرسمية وتفعيل بطاقتك أو التواصل مع الأمانات الولائية لولاياتكم:
+            </p>
+            <div class="snte-promo-buttons">
+                <a href="https://script.google.com/macros/s/AKfycbzCm8LfQxV5bQIGKOhX36RJDNhImVPYdSNa1JH2M7AdQYGMe2lofwy58kde9uQBIohoRA/exec" target="_blank" class="promo-btn promo-btn-gold">
+                    🪪 منصة الانخراط وتفعيل البطاقة
+                </a>
+                <a href="https://hamidibachireduc-png.github.io/snte-map-69/" target="_blank" class="promo-btn promo-btn-green">
+                    🗺️ خريطة الأمانات الولائية (58 ولاية)
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="sheet-scroll-container">
+        <div class="level-selector-strip no-print">
+            <div>
+                <strong style="color:var(--green-dark);">اختر القسم المسند (اللغة العربية / Français / English / Tamaziɣt / التربية البدنية) لمعاينة وطباعة جدوله الرسمي:</strong>
+            </div>
+            <div class="pills-container" id="groupPillsBar"></div>
+        </div>
+
+        <div class="a4-landscape-page" id="printableA4Sheet" dir="rtl">
+            <div class="sheet-header-grid">
+                <div class="sheet-right-col">
+                    <div><span id="lblTitleWilaya">مديرية التربية لولاية : </span><span id="valWilaya" contenteditable="true" onblur="syncFromSheet()">الأغواط</span></div>
+                    <div id="lblTitleInsp">مفتشية التعليم الابتدائي</div>
+                    <div><span id="lblTitleDist">مقاطعة : </span><span id="valDist" contenteditable="true" onblur="syncFromSheet()">الأغواط 01</span></div>
+                    <div><span id="lblTitleSchool">المدرسة الابتدائية : </span><span id="valSchool" contenteditable="true" onblur="syncFromSheet()">الشهيد أحمد بن عبد الرزاق</span></div>
+                </div>
+
+                <div class="sheet-center-col">
+                    <div class="rep-heading" id="lblRepHeading">الجمهورية الجزائرية الديمقراطية الشعبية</div>
+                    <div class="min-heading" id="lblMinHeading">وزارة التربية الوطنية</div>
+                    <div class="title-frame-with-logo">
+                        <img id="sheetLogoImg" alt="SNTE">
+                        <div class="title-frame-text">
+                            <span class="main-doc-title" id="lblSystemTitle">التوقيت الأسبوعي - نظام الدوام الواحد</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sheet-left-col">
+                    <div><span id="lblTitleYear">السنة الدراسية : </span><span id="valYear" contenteditable="true" onblur="syncFromSheet()">2026 / 2027</span></div>
+                    <div><span id="lblTitleTeacher">الأستاذ(ة) : </span><span id="valTeacher" style="color:var(--red-snte);" contenteditable="true">.........................</span></div>
+                    <div><span id="lblTitleLevel">المستوى / اللغة : </span><span id="valLevel" style="color:var(--green-dark);">السنة الأولى ابتدائي</span></div>
+                    <div><span id="lblTitleRoom">الأقسام المسندة : </span><span id="valRoom" contenteditable="true">01</span> <small id="valWorkload" style="color:var(--red-dark);"></small></div>
+                </div>
+            </div>
+
+            <table class="summary-table" id="topSummaryTable"></table>
+
+            <table class="timetable-grid" id="mainTimetableGrid"></table>
+
+            <div class="footer-signatures">
+                <div id="sig1">إمضاء الأستاذ (ة)</div>
+                <div id="sig2">إمضاء السيد (ة) المدير (ة)</div>
+                <div id="sig3">إمضاء السيد (ة) المفتش (ة)</div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const OFFICIAL_AUTHOR_SIGNATURE = "🔒 من إعداد الأستاذ حميدي البشير - أكتوبر 2026";
+
+    // شعار احتياطي مرسوم برمجياً بدون أي وسوم نصية
+    function createSnteLogoDataUrl() {
+        try {
+            const canvas = document.createElement("canvas");
+            canvas.width = 160;
+            canvas.height = 160;
+            const ctx = canvas.getContext("2d");
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(80, 80, 76, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#117a37";
+            ctx.beginPath();
+            ctx.arc(80, 80, 72, Math.PI, 0, false);
+            ctx.fill();
+
+            ctx.fillStyle = "#d91424";
+            ctx.beginPath();
+            ctx.arc(80, 80, 72, 0, Math.PI, false);
+            ctx.fill();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(80, 80, 48, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = "#e6b85c";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.arc(80, 80, 74, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.fillStyle = "#094d22";
+            ctx.font = "900 22px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("S.N.T.E", 80, 74);
+
+            ctx.fillStyle = "#d91424";
+            ctx.font = "bold 11px Tahoma";
+            ctx.fillText("النقابة الوطنية", 80, 96);
+
+            return canvas.toDataURL("image/png");
+        } catch (e) {
+            return "";
+        }
+    }
+
+    const FALLBACK_LOGO = createSnteLogoDataUrl();
+
+    let teachers = [
+        { id: "t1", name: "أ. حميدي البشير", rank: "مميز", spec: "arabic" },
+        { id: "t2", name: "أ. عبد القادر رحماني", rank: "مميز", spec: "arabic" },
+        { id: "t3", name: "أ. سعاد بن يطو", rank: "قسم ثان", spec: "arabic" },
+        { id: "t4", name: "أ. فاطمة الزهراء عليوي", rank: "قسم أول", spec: "arabic" },
+        { id: "t5", name: "أ. كمال بوزيد", rank: "تعليم ابتدائي", spec: "arabic" },
+        { id: "t6", name: "أ. أمين بلحاج", rank: "تعليم ابتدائي", spec: "arabic" },
+        { id: "t7", name: "Mme. Amrani Nadia", rank: "قسم ثان", spec: "french" },
+        { id: "t8", name: "Mr. Mansouri Karim", rank: "قسم أول", spec: "english" },
+        { id: "t9", name: "Mass Yacine Ait Kaci", rank: "تعليم ابتدائي", spec: "amazigh" },
+        { id: "t10", name: "أ. بوعلام دراجي", rank: "قسم أول", spec: "pe" }
+    ];
+
+    let groups = [
+        { id: "g1", level: "1", room: "حجرة 01 (س1)", teacherId: "t1" },
+        { id: "g2", level: "2", room: "حجرة 02 (س2)", teacherId: "t2" },
+        { id: "g5", level: "5", room: "حجرة 05 (س5)", teacherId: "t3" },
+        { id: "g4", level: "4", room: "حجرة 04 (س4)", teacherId: "t4" },
+        { id: "g3", level: "3", room: "حجرة 03 (س3)", teacherId: "t5" },
+        { id: "gp", level: "prep", room: "فوج تحضيري", teacherId: "t6" },
+        { id: "g_fr", level: "fr", room: "3AP (G1/G2) + 4AP (G1/G2) + 5AP (G1/G2)", teacherId: "t7" },
+        { id: "g_en", level: "en", room: "3PS (G1/G2) + 4PS (G1/G2) + 5PS (G1/G2)", teacherId: "t8" },
+        { id: "g_tz", level: "tz", room: "4AP (G1/G2) + 5AP (G1/G2)", teacherId: "t9" },
+        { id: "g_pe", level: "pe", room: "أفواج: س1 + س2 + س3 + س4 + س5", teacherId: "t10" }
+    ];
+
+    let activeGroupId = "g1";
+
+    // كافة المواقيت (اللغة العربية + اللغات الأجنبية والأمازيغية والتربية البدنية بمسميات اللغة وحسب كل قسم مسند بتوقيته)
+    const MODELS = {
+        "prep": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "التربية التحضيرية (عربية)",
+            systemTitle: "التوقيت الأسبوعي - قسم التربية التحضيرية",
+            arabicActualHours: 17,
+            workloadLabel: "17 سا تعليم فعلي + 4 سا تنظيم (21 سا)",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "إيقاظ علمي", "ت مدنية", "رسم وأشغال", "تربية إيقاعية", "مسرح وعرائس", "موسيقى وإنشاد", "تربية بدنية", "التنظيم", "المجموع"],
+            summaryCounts:  ["الحصص", "09", "05", "02", "04", "02", "02", "02", "02", "02", "04", "16", "34+18"],
+            summaryDurs:    ["المدة", "04:30", "02:30", "01:00", "02:00", "01:00", "01:00", "01:00", "01:00", "01:00", "02:00", "16×15د", "17:00+4:00"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "استقبال الأطفال", d: "15 د" }, { t: "تربية إسلامية", d: "30 د" }, { t: "تعبير شفوي", d: "30 د" }, { t: "ألعاب قرائية", d: "15 د" }],
+                    m2: [{ t: "رياضيات", d: "30 د", c: "bg-math" }, { t: "تربية إيقاعية", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }],
+                    a1: [{ t: "استقبال", d: "15 د" }, { t: "إيقاظ علمي", d: "30 د" }, { t: "رسم وأشغال", d: "30 د" }, { t: "مسرح وعرائس", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "استقبال الأطفال", d: "15 د" }, { t: "تربية مدنية", d: "30 د" }, { t: "تعبير شفوي", d: "30 د" }, { t: "تخطيط", d: "15 د" }],
+                    m2: [{ t: "رياضيات", d: "30 د", c: "bg-math" }, { t: "مسرح وعرائس", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }],
+                    a1: [{ t: "استقبال", d: "15 د" }, { t: "إيقاظ علمي", d: "30 د" }, { t: "تربية بدنية", d: "30 د", c: "bg-pe" }, { t: "تربية بدنية", d: "30 د", c: "bg-pe" }, { t: "تهيئة للخروج", d: "15 د" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "استقبال الأطفال", d: "15 د" }, { t: "تربية إسلامية", d: "30 د" }, { t: "تعبير شفوي", d: "30 د" }, { t: "ألعاب قرائية", d: "15 د" }],
+                    m2: [{ t: "رياضيات", d: "30 د", c: "bg-math" }, { t: "موسيقى وإنشاد", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "استقبال الأطفال", d: "15 د" }, { t: "تربية مدنية", d: "30 د" }, { t: "رياضيات", d: "30 د", c: "bg-math" }, { t: "تخطيط", d: "15 د" }],
+                    m2: [{ t: "إيقاظ علمي", d: "30 د" }, { t: "رسم وأشغال", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }],
+                    a1: [{ t: "استقبال", d: "15 د" }, { t: "إيقاظ علمي", d: "30 د" }, { t: "تربية بدنية", d: "30 د", c: "bg-pe" }, { t: "تربية بدنية", d: "30 د", c: "bg-pe" }, { t: "تهيئة للخروج", d: "15 د" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "استقبال الأطفال", d: "15 د" }, { t: "ألعاب قرائية", d: "30 د" }, { t: "إيقاظ علمي", d: "30 د" }, { t: "تربية إيقاعية", d: "15 د" }],
+                    m2: [{ t: "رياضيات", d: "30 د", c: "bg-math" }, { t: "موسيقى وإنشاد", d: "30 د" }, { t: "تهيئة للخروج", d: "15 د" }],
+                    a1: "off"
+                }
+            ]
+        },
+        "1": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "السنة الأولى ابتدائي (عربية)",
+            systemTitle: "التوقيت الأسبوعي - السنة الأولى ابتدائي (اللغة العربية)",
+            arabicActualHours: 19,
+            workloadLabel: "الحجم الفعلي: 19 سا عربية (27 حصة)",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "تربية فنية", "التعليم الفعلي لغة عربية", "تربية بدنية", "المجموع"],
+            summaryCounts:  ["الحصص", "14", "07", "03", "03", "27", "02", "29"],
+            summaryDurs:    ["المدة", "11:00", "05:00", "01:30", "01:30", "19 سا", "02:00", "21:00 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "فهم المنطوق (س1)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "تعبير شفوي (س1)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س1)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "التربية الفنية (س1)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "رياضيات: معالجة ودعم (س1)", d: "30 د (13:00-13:30)", w: "w-30", c: "bg-math" }, { t: "القراءة الإجمالية (س1)", d: "60 د (13:30-14:30)", w: "w-60" }, { t: "محفوظات (س1)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "التربية الإسلامية (س1)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "قراءة تحليلية (س1)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س1)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "كتابة وخط (س1)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "قراءة وتركيب (س1)", d: "60 د (13:00-14:00)", w: "w-60" }, { t: "التربية البدنية والرياضية (س1)", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-pe" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "كتابة وخط (س1)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "رياضيات: درس وتطبيقات (س1)", d: "60 د (08:30-09:30)", w: "w-60", c: "bg-math" }],
+                    m2: [{ t: "الإنتاج الشفوي (س1)", d: "60 د (09:45-10:45)", w: "w-60" }, { t: "التربية الإسلامية (س1)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "قراءة (س1)", d: "60 د (08:00-09:00)", w: "w-60" }, { t: "كتابة وخط (س1)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "تطبيقات قرائية (س1)", d: "60 د (09:45-10:45)", w: "w-60" }, { t: "رياضيات: معالجة ودعم (س1)", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-math" }],
+                    a1: [{ t: "تطبيقات كتابية (س1)", d: "60 د (13:00-14:00)", w: "w-60" }, { t: "إملاء (س1)", d: "30 د (14:00-14:30)", w: "w-30" }, { t: "التربية الفنية (س1)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "التربية الإسلامية (س1)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "إدماج وألعاب قرائية (س1)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "رياضيات: ألعاب رياضياتية (س1)", d: "30 د (09:45-10:15)", w: "w-30", c: "bg-math" }, { t: "التربية البدنية والرياضية (س1)", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-pe" }],
+                    a1: "off"
+                }
+            ]
+        },
+        "2": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "السنة الثانية ابتدائي (عربية)",
+            systemTitle: "التوقيت الأسبوعي - السنة الثانية ابتدائي (اللغة العربية)",
+            arabicActualHours: 19,
+            workloadLabel: "الحجم الفعلي: 19 سا عربية (27 حصة)",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "تربية فنية", "التعليم الفعلي لغة عربية", "تربية بدنية", "المجموع"],
+            summaryCounts:  ["الحصص", "15", "07", "03", "03", "27", "02", "30"],
+            summaryDurs:    ["المدة", "11:00", "05:00", "01:30", "01:30", "19 سا", "02:00", "21:00 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "التربية الإسلامية (س2)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "فهم المنطوق (س2)", d: "30 د (08:30-09:00)", w: "w-30" }, { t: "تعبير شفوي (س2)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س2)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "التربية الفنية (س2)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "رياضيات: معالجة ودعم (س2)", d: "30 د (13:00-13:30)", w: "w-30", c: "bg-math" }, { t: "القراءة (س2)", d: "60 د (13:30-14:30)", w: "w-60" }, { t: "كتابة وخط (س2)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "رياضيات: درس وتطبيقات (س2)", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-math" }, { t: "التربية الفنية (س2)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "رياضيات: معالجة ودعم (س2)", d: "30 د (09:45-10:15)", w: "w-30", c: "bg-math" }, { t: "الإنتاج الشفوي (س2)", d: "60 د (10:15-11:15)", w: "w-60" }],
+                    a1: [{ t: "قراءة (س2)", d: "60 د (13:00-14:00)", w: "w-60" }, { t: "التربية البدنية والرياضية (س2)", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-pe" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "إملاء (س2)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "رياضيات: درس وتطبيقات (س2)", d: "60 د (08:30-09:30)", w: "w-60", c: "bg-math" }],
+                    m2: [{ t: "القراءة (س2)", d: "60 د (09:45-10:45)", w: "w-60" }, { t: "كتابة وخط (س2)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "قراءة (س2)", d: "60 د (08:00-09:00)", w: "w-60" }, { t: "محفوظات (س2)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "التربية الإسلامية (س2)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "رياضيات: معالجة ودعم (س2)", d: "30 د (10:15-10:45)", w: "w-30", c: "bg-math" }, { t: "التربية الفنية (س2)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "قراءة إتقان (س2)", d: "60 د (13:00-14:00)", w: "w-60" }, { t: "التربية البدنية والرياضية (س2)", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-pe" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "إملاء (س2)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "إدماج (س2)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "رياضيات: ألعاب رياضياتية (س2)", d: "30 د (09:45-10:15)", w: "w-30", c: "bg-math" }, { t: "التربية الإسلامية (س2)", d: "30 د (10:15-10:45)", w: "w-30" }, { t: "محفوظات (س2)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: "off"
+                }
+            ]
+        },
+        "3": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "السنة الثالثة ابتدائي (عربية)",
+            systemTitle: "التوقيت الأسبوعي - السنة الثالثة ابتدائي (اللغة العربية)",
+            arabicActualHours: 17,
+            workloadLabel: "الفعلي عربية: 17 سا (25 حصة)",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "تربية علمية", "تاريخ", "تربية فنية", "التعليم الفعلي لغة عربية", "تربية بدنية", "فرنسية/إنجليزية", "المجموع"],
+            summaryCounts:  ["الحصص", "09", "07", "03", "02", "01", "03", "25", "02", "04", "31"],
+            summaryDurs:    ["المدة", "07:30", "05:00", "01:30", "01:00", "30 د", "01:30", "17:00 سا", "02:00", "03:00", "22:00 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "فهم المنطوق (س3)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "القراءة: أداء وفهم (س3)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "تعبير شفوي (س3)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "رياضيات: درس وتطبيقات (س3)", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-math" }],
+                    a1: [{ t: "Français / English (س3)", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-lang" }, { t: "رياضيات: معالجة ودعم (س3)", d: "30 د (14:00-14:30)", w: "w-30", c: "bg-math" }, { t: "تربية إسلامية (س3)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "قراءة + ظاهرة تركيبية (س3)", d: "60 د (08:00-09:00)", w: "w-60" }, { t: "تربية فنية (س3)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "إنتاج شفوي (س3)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "رياضيات: درس وتطبيقات (س3)", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-math" }],
+                    a1: [{ t: "تربية بدنية ورياضية (س3)", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-pe" }, { t: "مطالعة (س3)", d: "60 د (14:00-15:00)", w: "w-60" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "تربية علمية (س3)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "تربية إسلامية (س3)", d: "30 د (08:30-09:00)", w: "w-30" }, { t: "تاريخ (س3)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "قراءة + ظاهرة صرفية أو إملائية (س3)", d: "60 د (09:45-10:45)", w: "w-60" }, { t: "رياضيات: معالجة ودعم (س3)", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-math" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "تربية إسلامية (س3)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "رياضيات: ألعاب رياضياتية (س3)", d: "60 د (08:30-09:30)", w: "w-60", c: "bg-math" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س3)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "تربية فنية (س3)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "تربية علمية (س3)", d: "30 د (13:00-13:30)", w: "w-30" }, { t: "رياضيات: معالجة ودعم (س3)", d: "30 د (13:30-14:00)", w: "w-30", c: "bg-math" }, { t: "محفوظات (س3)", d: "30 د (14:00-14:30)", w: "w-30" }, { t: "تربية فنية (س3)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "Français / English (س3)", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-lang" }, { t: "التدريب على الإنتاج الكتابي (س3)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "التدريب على الإنتاج الكتابي (س3)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "تربية بدنية ورياضية (س3)", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-pe" }],
+                    a1: "off"
+                }
+            ]
+        },
+        "4": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "السنة الرابعة ابتدائي (عربية)",
+            systemTitle: "التوقيت الأسبوعي - السنة الرابعة ابتدائي (اللغة العربية)",
+            arabicActualHours: 17,
+            workloadLabel: "الفعلي عربية: 17 سا (27 حصة)",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "ت مدنية", "تربية علمية", "تاريخ جغرافيا", "تربية فنية", "التعليم الفعلي لغة عربية", "تربية بدنية", "فرنسية", "إنجليزية", "المجموع"],
+            summaryCounts:  ["الحصص", "09", "06", "04", "02", "02", "02", "02", "27", "01", "02", "02", "32"],
+            summaryDurs:    ["المدة", "06:30", "04:30", "02:00", "01:00", "01:00", "01:00", "01:00", "17:00 سا", "01:30", "02:00", "02:00", "22:30 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "تربية إسلامية (س4)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "القراءة: أداء وفهم (س4)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "التربية الفنية (س4)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "فهم المنطوق (س4)", d: "30 د (10:15-10:45)", w: "w-30" }, { t: "تعبير شفوي (س4)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "رياضيات: معالجة ودعم (س4)", d: "30 د (13:00-13:30)", w: "w-30", c: "bg-math" }, { t: "English (س4)", d: "60 د (13:30-14:30)", w: "w-60", c: "bg-lang" }, { t: "تربية مدنية (س4)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "تربية إسلامية (س4)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "رياضيات: درس وتطبيقات (س4)", d: "60 د (08:30-09:30)", w: "w-60", c: "bg-math" }],
+                    m2: [{ t: "الإنتاج الشفوي (س4)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "قراءة + ظاهرة تركيبية (س4)", d: "60 د (10:15-11:15)", w: "w-60" }],
+                    a1: [{ t: "التربية العلمية (س4)", d: "30 د (13:00-13:30)", w: "w-30" }, { t: "جغرافيا (س4)", d: "30 د (13:30-14:00)", w: "w-30" }, { t: "Français (س4)", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-lang" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "التربية العلمية (س4)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "تاريخ (س4)", d: "30 د (08:30-09:00)", w: "w-30" }, { t: "ت إسلامية (س4)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س4)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "محفوظات (س4)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "القراءة والظاهرة الصرفية أو الإملائية (س4)", d: "60 د (08:00-09:00)", w: "w-60" }, { t: "رياضيات: معالجة ودعم (س4)", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-math" }],
+                    m2: [{ t: "تربية مدنية (س4)", d: "30 د (09:45-10:15)", w: "w-30" }, { t: "English (س4)", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-lang" }],
+                    a1: [{ t: "تربية بدنية ورياضية (س4)", d: "90 د (13:00-14:30)", w: "w-90", c: "bg-pe" }, { t: "التربية الفنية (س4)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "تربية إسلامية (س4)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "Français (س4)", d: "60 د (08:30-09:30)", w: "w-60", c: "bg-lang" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س4)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "الإنتاج الكتابي (س4)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "مطالعة (س4)", d: "30 د (13:00-13:30)", w: "w-30" }, { t: "تكوين / نشاطات ثقافية ورياضية", d: "90 د (13:30-15:00)", w: "w-90", c: "bg-off" }]
+                }
+            ]
+        },
+        "5": {
+            lang: "ar",
+            spec: "arabic",
+            levelTitle: "السنة الخامسة ابتدائي (عربية)",
+            systemTitle: "التوقيت الأسبوعي - السنة الخامسة ابتدائي (اللغة العربية)",
+            arabicActualHours: 17,
+            workloadLabel: "قسم نهائي (المرسوم 25-54) | 17 سا فعلي",
+            summaryHeaders: ["الأنشطة", "اللغة العربية", "رياضيات", "تربية إسلامية", "ت مدنية", "تربية علمية", "تاريخ جغرافيا", "تربية فنية", "التعليم الفعلي لغة عربية", "تربية بدنية", "فرنسية", "إنجليزية", "المجموع"],
+            summaryCounts:  ["الحصص", "09", "06", "03", "01", "02", "02", "01", "23", "01", "03", "02", "29"],
+            summaryDurs:    ["المدة", "06:30", "04:30", "01:30", "0:45", "01:30", "01:30", "0:45", "17:00 سا", "01:00", "03:00", "01:30", "22:30 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "ت إسلامية (س5)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "فهم المنطوق (س5)", d: "30 د (08:30-09:00)", w: "w-30" }, { t: "ت شفوي (س5)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "القراءة: أداء وفهم (س5)", d: "60 د (09:45-10:45)", w: "w-60" }, { t: "رياضيات: معالجة ودعم (س5)", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-math" }],
+                    a1: [{ t: "Français (س5)", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-lang" }, { t: "تربية بدنية ورياضية (س5)", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-pe" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "رياضيات: درس وتطبيقات (س5)", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-math" }, { t: "تربية إسلامية (س5)", d: "30 د (09:00-09:30)", w: "w-30" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س5)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "رياضيات: معالجة ودعم (س5)", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-math" }],
+                    a1: [{ t: "قراءة + ظاهرة تركيبية (س5)", d: "60 د (13:00-14:00)", w: "w-60" }, { t: "محفوظات (س5)", d: "30 د (14:00-14:30)", w: "w-30" }, { t: "الإنتاج الشفوي (س5)", d: "30 د (14:30-15:00)", w: "w-30" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "تربية إسلامية (س5)", d: "30 د (08:00-08:30)", w: "w-30" }, { t: "القراءة والظاهرة الصرفية أو الإملائية (س5)", d: "60 د (08:30-09:30)", w: "w-60" }],
+                    m2: [{ t: "التربية العلمية (س5)", d: "45 د (09:45-10:30)", w: "w-45" }, { t: "English (س5)", d: "45 د (10:30-11:15)", w: "w-45", c: "bg-lang" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "تربية مدنية (س5)", d: "45 د (08:00-08:45)", w: "w-45" }, { t: "تاريخ (س5)", d: "45 د (08:45-09:30)", w: "w-45" }],
+                    m2: [{ t: "رياضيات: درس وتطبيقات (س5)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-math" }, { t: "رياضيات: معالجة ودعم (س5)", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-math" }],
+                    a1: [{ t: "Français (س5)", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-lang" }, { t: "الإنتاج الكتابي (س5)", d: "60 د (14:00-15:00)", w: "w-60" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "التربية العلمية (س5)", d: "45 د (08:00-08:45)", w: "w-45" }, { t: "التربية الفنية (س5)", d: "45 د (08:45-09:30)", w: "w-45" }],
+                    m2: [{ t: "Français (س5)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-lang" }, { t: "مطالعة (س5)", d: "30 د (10:45-11:15)", w: "w-30" }],
+                    a1: [{ t: "جغرافيا (س5)", d: "45 د (13:00-13:45)", w: "w-45" }, { t: "English (س5)", d: "45 د (13:45-14:30)", w: "w-45", c: "bg-lang" }, { t: "نشاطات ثقافية", d: "30 د (14:30-15:00)", w: "w-30", c: "bg-off" }]
+                }
+            ]
+        },
+
+        /* ================= 1. مواقيت اللغة الفرنسية بمسميات اللغة وحسب كل قسم مسند (LTR) ================= */
+        "fr": {
+            lang: "fr",
+            spec: "french",
+            levelTitle: "Français (3AP / 4AP / 5AP)",
+            systemTitle: "EMPLOI DU TEMPS HEBDOMADAIRE - LANGUE FRANÇAISE",
+            arabicActualHours: 14,
+            workloadLabel: "Classes assignées : 3AP (G1/G2) | 4AP (G1/G2) | 5AP (G1/G2)",
+            summaryHeaders: ["Classes Assignées", "3AP - Gr 01", "3AP - Gr 02", "4AP - Gr 01", "4AP - Gr 02", "5AP - Gr 01", "5AP - Gr 02", "Remédiation Pédag.", "Total Hebdomadaire"],
+            summaryCounts:  ["Séances / Semaine", "02 Séances", "02 Séances", "03 Séances", "03 Séances", "03 Séances", "03 Séances", "03 Séances", "19 Séances"],
+            summaryDurs:    ["Volume Horaire", "01h30 (45m×2)", "01h30 (45m×2)", "02h00 (45m×2+30m)", "02h00 (45m×2+30m)", "03h00 (60m×3)", "03h00 (60m×3)", "01h30 (30m×3)", "14h30 / Semaine"],
+            days: [
+                {
+                    day: "Dimanche",
+                    m1: [
+                        { t: "5AP (G2) : Compréhension de l’oral & Production", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G1) : Compréhension de l’oral", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-math" }
+                    ],
+                    m2: [
+                        { t: "4AP (G2) : Compréhension de l’oral", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "3AP (G1) : Oral / Compréhension & Phonétique", d: "45 min (10:30-11:15)", w: "w-45" }
+                    ],
+                    a1: [
+                        { t: "5AP (G1) : Compréhension de l’oral & Lecture", d: "60 min (13:00-14:00)", w: "w-60", c: "bg-lang" },
+                        { t: "3AP (G2) : Oral / Compréhension & Phonétique", d: "45 min (14:00-14:45)", w: "w-45" },
+                        { t: "3AP : Remédiation", d: "15 min", w: "w-30", c: "bg-pe" }
+                    ]
+                },
+                {
+                    day: "Lundi",
+                    m1: [
+                        { t: "5AP (G2) : Compréhension de l’écrit & Vocabulaire", d: "60 min (08:00-09:00)", w: "w-60", c: "bg-lang" },
+                        { t: "5AP (G2) : Remédiation", d: "30 min (09:00-09:30)", w: "w-30", c: "bg-pe" }
+                    ],
+                    m2: [
+                        { t: "3AP (G1) : Lecture / Phonétique & Écriture", d: "45 min (09:45-10:30)", w: "w-45" },
+                        { t: "3AP (G2) : Lecture / Phonétique & Écriture", d: "45 min (10:30-11:15)", w: "w-45" }
+                    ],
+                    a1: [
+                        { t: "4AP (G2) : Compréhension de l’écrit & Grammaire", d: "60 min (13:00-14:00)", w: "w-60", c: "bg-math" },
+                        { t: "4AP (G1) : Compréhension de l’écrit & Grammaire", d: "60 min (14:00-15:00)", w: "w-60", c: "bg-math" }
+                    ]
+                },
+                {
+                    day: "Mardi",
+                    m1: [
+                        { t: "5AP (G1) : Grammaire & Conjugaison", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "5AP (G2) : Grammaire & Conjugaison", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-lang" }
+                    ],
+                    m2: [
+                        { t: "4AP (G1) : Lecture & Dictée", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "4AP (G2) : Lecture & Dictée", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-math" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Mercredi",
+                    m1: [
+                        { t: "4AP (G1) : Production écrite", d: "30 min (08:00-08:30)", w: "w-30", c: "bg-math" },
+                        { t: "4AP (G2) : Production écrite", d: "30 min (08:30-09:00)", w: "w-30", c: "bg-math" },
+                        { t: "4AP : Remédiation", d: "30 min (09:00-09:30)", w: "w-30", c: "bg-pe" }
+                    ],
+                    m2: [
+                        { t: "5AP (G2) : Orthographe & Production écrite", d: "60 min (09:45-10:45)", w: "w-60", c: "bg-lang" },
+                        { t: "5AP (G1) : Remédiation", d: "30 min (10:45-11:15)", w: "w-30", c: "bg-pe" }
+                    ],
+                    a1: [
+                        { t: "5AP (G1) : Orthographe & Production écrite", d: "60 min (13:00-14:00)", w: "w-60", c: "bg-lang" },
+                        { t: "Coordination Pédagogique", d: "60 min (14:00-15:00)", w: "w-60", c: "bg-off" }
+                    ]
+                },
+                {
+                    day: "Jeudi",
+                    m1: [
+                        { t: "4AP (G2) : Comptine & Projet", d: "30 min (08:00-08:30)", w: "w-30", c: "bg-math" },
+                        { t: "4AP (G1) : Entrainement à l’écrit & Projet", d: "60 min (08:30-09:30)", w: "w-60", c: "bg-math" }
+                    ],
+                    m2: [
+                        { t: "5AP (G1) : Compte-rendu & Projet", d: "60 min (09:45-10:45)", w: "w-60", c: "bg-lang" },
+                        { t: "5AP (G2) : Projet", d: "30 min (10:45-11:15)", w: "w-30", c: "bg-lang" }
+                    ],
+                    a1: "off"
+                }
+            ]
+        },
+
+        /* ================= 2. مواقيت اللغة الإنجليزية بمسميات اللغة وحسب كل قسم مسند (LTR) ================= */
+        "en": {
+            lang: "en",
+            spec: "english",
+            levelTitle: "English (3PS / 4PS / 5PS)",
+            systemTitle: "WEEKLY TIMETABLE - ENGLISH LANGUAGE",
+            arabicActualHours: 11,
+            workloadLabel: "Assigned Classes: 3PS (G1/G2) | 4PS (G1/G2) | 5PS (G1/G2)",
+            summaryHeaders: ["Assigned Classes", "3PS - Gr 01", "3PS - Gr 02", "4PS - Gr 01", "4PS - Gr 02", "5PS - Gr 01", "5PS - Gr 02", "Remedial Work", "Total Weekly Load"],
+            summaryCounts:  ["Sessions / Week", "02 Sessions", "02 Sessions", "02 Sessions", "02 Sessions", "02 Sessions", "02 Sessions", "03 Sessions", "15 Sessions"],
+            summaryDurs:    ["Weekly Duration", "01h30 (45m×2)", "01h30 (45m×2)", "02h00 (60m×2)", "02h00 (60m×2)", "01h30 (45m×2)", "01h30 (45m×2)", "01h30 (30m×3)", "11h30 / Week"],
+            days: [
+                {
+                    day: "Sunday",
+                    m1: [
+                        { t: "3PS (G2): I Listen & Repeat (Listening/Speaking)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "5PS (G2): I Listen & Interact", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-pe" }
+                    ],
+                    m2: [
+                        { t: "4PS (G2): I Listen & Discover (Phonics)", d: "60 min (09:45-10:45)", w: "w-60", c: "bg-math" },
+                        { t: "3PS: Remedial Work", d: "30 min (10:45-11:15)", w: "w-30" }
+                    ],
+                    a1: [
+                        { t: "3PS (G1): I Listen & Repeat (Listening/Speaking)", d: "60 min (13:00-14:00)", w: "w-60", c: "bg-lang" },
+                        { t: "4PS (G1): I Listen & Discover (Phonics)", d: "60 min (14:00-15:00)", w: "w-60", c: "bg-math" }
+                    ]
+                },
+                {
+                    day: "Monday",
+                    m1: [
+                        { t: "3PS (G2): I Read & Write (Handwriting)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4PS (G2): I Read & Enjoy", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-math" }
+                    ],
+                    m2: [
+                        { t: "5PS (G2): I Read & Discover (Grammar/Reading)", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-pe" },
+                        { t: "4PS: Remedial Work", d: "45 min (10:30-11:15)", w: "w-45" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Tuesday",
+                    m1: [
+                        { t: "4PS (G2): I Read & Write (Dictation)", d: "60 min (08:00-09:00)", w: "w-60", c: "bg-math" },
+                        { t: "5PS: Remedial Work", d: "30 min (09:00-09:30)", w: "w-30" }
+                    ],
+                    m2: [
+                        { t: "3PS (G2): Phonics & Songs", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-lang" },
+                        { t: "5PS (G1): I Listen & Interact", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-pe" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Wednesday",
+                    m1: [
+                        { t: "5PS (G2): I Learn to Write (Project)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-pe" },
+                        { t: "3PS (G1): Phonics & Songs", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-lang" }
+                    ],
+                    m2: [
+                        { t: "5PS (G1): I Read & Discover", d: "30 min (09:45-10:15)", w: "w-30", c: "bg-pe" },
+                        { t: "4PS (G1): I Read & Write (Language Games)", d: "60 min (10:15-11:15)", w: "w-60", c: "bg-math" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Thursday",
+                    m1: [
+                        { t: "3PS (G1): I Read & Write (Handwriting)", d: "60 min (08:00-09:00)", w: "w-60", c: "bg-lang" },
+                        { t: "4PS (G2): Games & Songs", d: "30 min (09:00-09:30)", w: "w-30", c: "bg-math" }
+                    ],
+                    m2: [
+                        { t: "4PS (G1): I Play Roles & Songs", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "5PS (G2): Assessment", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-pe" }
+                    ],
+                    a1: [
+                        { t: "3PS (G2): Language Games", d: "45 min (13:00-13:45)", w: "w-45", c: "bg-lang" },
+                        { t: "5PS (G1): I Learn to Write & Project", d: "45 min (13:45-14:30)", w: "w-45", c: "bg-pe" },
+                        { t: "Coordination", d: "30 min (14:30-15:00)", w: "w-30", c: "bg-off" }
+                    ]
+                }
+            ]
+        },
+
+        /* ================= 3. مواقيت اللغة الأمازيغية بمسميات اللغة وحسب كل قسم مسند (LTR) ================= */
+        "tz": {
+            lang: "tz",
+            spec: "amazigh",
+            levelTitle: "Tamaziɣt - الأمازيغية (4AP / 5AP)",
+            systemTitle: "AHIL N WAKUD IMALAS - TUTLAYT TAMAZIƔT",
+            arabicActualHours: 12,
+            workloadLabel: "Ismilen (الأقسام المسندة) : 4AP (G1/G2) | 5AP (G1/G2)",
+            summaryHeaders: ["Ismilen (الأقسام)", "4AP - Asmil 01", "4AP - Asmil 02", "5AP - Asmil 01", "5AP - Asmil 02", "aseɣti (معالجة)", "Assemday (المجموع)"],
+            summaryCounts:  ["Tiɣimit (الحصص)", "04 Tiɣimit", "04 Tiɣimit", "04 Tiɣimit", "04 Tiɣimit", "02 Tiɣimit", "18 Tiɣimit"],
+            summaryDurs:    ["Akud (المدة)", "03h00", "03h00", "03h00", "03h00", "01h00", "13h00 / Imalas"],
+            days: [
+                {
+                    day: "Acer (الأحد)",
+                    m1: [
+                        { t: "4AP (G1) : Tigzi n tmesliwt (فهم المنطوق)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G2) : Tigzi n tmesliwt (فهم المنطوق)", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-lang" }
+                    ],
+                    m2: [
+                        { t: "5AP (G1) : Tigzi n tmesliwt & Asenfali s wawal", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "5AP (G2) : Tigzi n tmesliwt & Asenfali s wawal", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-math" }
+                    ],
+                    a1: [
+                        { t: "4AP (G1) : Taɣuri & Tifinaɣ (قراءة وتيفيناغ)", d: "45 min (13:00-13:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G2) : Taɣuri & Tifinaɣ (قراءة وتيفيناغ)", d: "45 min (13:45-14:30)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP : Aseɣti (معالجة)", d: "30 min (14:30-15:00)", w: "w-30", c: "bg-pe" }
+                    ]
+                },
+                {
+                    day: "Arim (الاثنين)",
+                    m1: [
+                        { t: "5AP (G1) : Taɣuri & Tigzi n tira (فهم المكتوب)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-math" },
+                        { t: "5AP (G2) : Taɣuri & Tigzi n tira (فهم المكتوب)", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-math" }
+                    ],
+                    m2: [
+                        { t: "4AP (G1) : Tajerrumt (الظواهر النحوية)", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G2) : Tajerrumt (الظواهر النحوية)", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-lang" }
+                    ],
+                    a1: [
+                        { t: "5AP (G1) : Tajerrumt & Asegzi n tira (نحو وإملاء)", d: "45 min (13:00-13:45)", w: "w-45", c: "bg-math" },
+                        { t: "5AP (G2) : Tajerrumt & Asegzi n tira (نحو وإملاء)", d: "45 min (13:45-14:30)", w: "w-45", c: "bg-math" },
+                        { t: "5AP : Aseɣti (معالجة)", d: "30 min (14:30-15:00)", w: "w-30", c: "bg-pe" }
+                    ]
+                },
+                {
+                    day: "Aram (الثلاثاء)",
+                    m1: [
+                        { t: "4AP (G1) : Asegzi n tira & Asfaru (إملاء وإنتاج)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G2) : Asegzi n tira & Asfaru (إملاء وإنتاج)", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-lang" }
+                    ],
+                    m2: [
+                        { t: "5AP (G1) : Asfaru s tira (الإنتاج الكتابي)", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "5AP (G2) : Asfaru s tira (الإنتاج الكتابي)", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-math" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Ahad (الأربعاء)",
+                    m1: [
+                        { t: "4AP (G1) : Isfruyen & Asenfar (محفوظات ومشروع)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-lang" },
+                        { t: "4AP (G2) : Isfruyen & Asenfar (محفوظات ومشروع)", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-lang" }
+                    ],
+                    m2: [
+                        { t: "5AP (G1) : Asenfar & Aktazal (مشروع وتقويم)", d: "45 min (09:45-10:30)", w: "w-45", c: "bg-math" },
+                        { t: "5AP (G2) : Asenfar & Aktazal (مشروع وتقويم)", d: "45 min (10:30-11:15)", w: "w-45", c: "bg-math" }
+                    ],
+                    a1: "off"
+                },
+                {
+                    day: "Amhad (الخميس)",
+                    m1: [
+                        { t: "5AP (G1+G2) : Taɣuri & Idles (مطالعة وتراث)", d: "45 min (08:00-08:45)", w: "w-45", c: "bg-pe" },
+                        { t: "4AP (G1+G2) : Urar n tutlayt (ألعاب قرائية)", d: "45 min (08:45-09:30)", w: "w-45", c: "bg-pe" }
+                    ],
+                    m2: [
+                        { t: "Aheggi Asensegman (تنسيق وتحضير بيداغوجي)", d: "90 min (09:45-11:15)", w: "w-90", c: "bg-off" }
+                    ],
+                    a1: "off"
+                }
+            ]
+        },
+
+        /* ================= 4. مواقيت التربية البدنية حسب كل قسم مسند بتوقيته (RTL) ================= */
+        "pe": {
+            lang: "ar",
+            spec: "pe",
+            levelTitle: "التربية البدنية (س1 إلى س5)",
+            systemTitle: "التوقيت الأسبوعي - أستاذ التربية البدنية والرياضية",
+            arabicActualHours: 16,
+            workloadLabel: "الأقسام المسندة: س1 + س2 + س3 + س4 + س5 ابتدائي",
+            summaryHeaders: ["الأقسام المسندة", "السنة الأولى (ف1+ف2)", "السنة الثانية (ف1+ف2)", "السنة الثالثة (ف1+ف2)", "السنة الرابعة (ف1+ف2)", "السنة الخامسة (ف1+ف2)", "الرياضة المدرسية", "المجموع"],
+            summaryCounts:  ["عدد الحصص", "04 حصص", "04 حصص", "02 حصتان", "02 حصتان", "02 حصتان", "02 حصتان", "16 حصة"],
+            summaryDurs:    ["المدة الأسبوعية", "04:00 سا", "04:00 سا", "02:00 سا", "02:00 سا", "02:00 سا", "02:00 سا", "16:00 سا"],
+            days: [
+                {
+                    day: "الأحد",
+                    m1: [{ t: "س5 (فوج 2): تربية بدنية ورياضية", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-pe" }, { t: "تحضير الورشات", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-off" }],
+                    m2: [{ t: "س3 (فوج 2): تربية بدنية ورياضية", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-pe" }, { t: "مرافقة وتنظيم", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-off" }],
+                    a1: [{ t: "س4 (فوج 2): تربية بدنية ورياضية", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-math" }, { t: "س5 (فوج 1): تربية بدنية ورياضية", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-pe" }]
+                },
+                {
+                    day: "الاثنين",
+                    m1: [{ t: "س1 (فوج 2): ألعاب حركية وتوازن", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-lang" }, { t: "تحضير العتاد", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-off" }],
+                    m2: [{ t: "س2 (فوج 2): ألعاب حركية وتوازن", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-lang" }, { t: "مرافقة وتنظيم", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-off" }],
+                    a1: [{ t: "س3 (فوج 1): تربية بدنية ورياضية", d: "60 د (13:00-14:00)", w: "w-60", c: "bg-pe" }, { t: "س1 (فوج 1) + س2 (فوج 1): تربية بدنية", d: "60 د (14:00-15:00)", w: "w-60", c: "bg-lang" }]
+                },
+                {
+                    day: "الثلاثاء",
+                    m1: [{ t: "س1 (فوج 2): تربية بدنية (جري ورمي)", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-lang" }, { t: "تحضير الميدان", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-off" }],
+                    m2: [{ t: "س2 (فوج 2): تربية بدنية (جري ورمي)", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-lang" }, { t: "صيانة العتاد", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-off" }],
+                    a1: "off"
+                },
+                {
+                    day: "الأربعاء",
+                    m1: [{ t: "س4 (فوج 2): ألعاب جماعية وجمباز", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-math" }, { t: "تحضير الورشات", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-off" }],
+                    m2: [{ t: "تدريب الفرق المدرسية", d: "60 د (09:45-10:45)", w: "w-60", c: "bg-pe" }, { t: "تنظيم الأفواج", d: "30 د (10:45-11:15)", w: "w-30", c: "bg-off" }],
+                    a1: [{ t: "س4 (فوج 1): تربية بدنية ورياضية", d: "90 د (13:00-14:30)", w: "w-90", c: "bg-math" }, { t: "س2 (فوج 1): تربية بدنية", d: "30 د (14:30-15:00)", w: "w-30", c: "bg-lang" }]
+                },
+                {
+                    day: "الخميس",
+                    m1: [{ t: "تنشيط ومنافسات الرياضة المدرسية", d: "60 د (08:00-09:00)", w: "w-60", c: "bg-pe" }, { t: "تحضير الميدان", d: "30 د (09:00-09:30)", w: "w-30", c: "bg-off" }],
+                    m2: [{ t: "جرد الوسائل", d: "30 د (09:45-10:15)", w: "w-30", c: "bg-off" }, { t: "س1 (فوج 1) + س3 (فوج 1): تربية بدنية", d: "60 د (10:15-11:15)", w: "w-60", c: "bg-pe" }],
+                    a1: "off"
+                }
+            ]
+        }
+    };
+
+    function enforceAuthorCopyright() {
+        const banner = document.getElementById("headerCreditText");
+        if (banner && banner.textContent.trim() !== OFFICIAL_AUTHOR_SIGNATURE) {
+            banner.textContent = OFFICIAL_AUTHOR_SIGNATURE;
+        }
+        if (document.title.indexOf("حميدي البشير") === -1) {
+            document.title = "منظومة التوقيت الأسبوعي الرسمي 2026/2027 - إعداد الأستاذ حميدي البشير";
+        }
+    }
+
+    function changeUserFont() {
+        const fontFam = document.getElementById("fontFamilySelect").value;
+        const fontSize = document.getElementById("fontSizeSelect").value;
+        document.documentElement.style.setProperty("--app-font", fontFam);
+        document.documentElement.style.setProperty("--table-font-scale", fontSize);
+    }
+
+    function openSideTab(tabId, btn) {
+        document.querySelectorAll(".tab-content").forEach(function(el) { el.classList.remove("active"); });
+        document.querySelectorAll(".tab-btn").forEach(function(el) { el.classList.remove("active"); });
+        document.getElementById(tabId).classList.add("active");
+        btn.classList.add("active");
+    }
+
+    function rankClass(rank) {
+        if (rank === "مميز") return "r-مميز";
+        if (rank === "قسم ثان") return "r-ثان";
+        if (rank === "قسم أول") return "r-أول";
+        return "r-ابتدائي";
+    }
+
+    function rankDisplayTitle(rank, lang) {
+        lang = lang || "ar";
+        if (lang === "fr") {
+            if (rank === "مميز") return "Professeur Distingué";
+            if (rank === "قسم ثان") return "Professeur Classe 2";
+            if (rank === "قسم أول") return "Professeur Classe 1";
+            return "Professeur Ens. Primaire";
+        }
+        if (lang === "en") {
+            if (rank === "مميز") return "Distinguished Teacher";
+            if (rank === "قسم ثان") return "Class 2 Teacher";
+            if (rank === "قسم أول") return "Class 1 Teacher";
+            return "Primary School Teacher";
+        }
+        if (lang === "tz") {
+            if (rank === "مميز") return "Aselmad Ufrin (مميز)";
+            if (rank === "قسم ثان") return "Aselmad Asmil 2 (قسم ثان)";
+            if (rank === "قسم أول") return "Aselmad Asmil 1 (قسم أول)";
+            return "Aselmad n Umezwaru (ابتدائي)";
+        }
+        if (rank === "تعليم ابتدائي") return "أستاذ تعليم ابتدائي";
+        if (rank === "قسم أول") return "أستاذ قسم أول";
+        if (rank === "قسم ثان") return "أستاذ قسم ثانٍ";
+        if (rank === "مميز") return "أستاذ مميز";
+        return rank;
+    }
+
+    function rankWeight(rank) {
+        if (rank === "مميز") return 1;
+        if (rank === "قسم ثان") return 2;
+        if (rank === "قسم أول") return 3;
+        return 4;
+    }
+
+    function levelWeight(level, policy) {
+        if (policy === "by_rank") {
+            const map1 = { "1": 100, "2": 95, "5": 90, "4": 75, "3": 65, "prep": 50 };
+            return map1[level] || 10;
+        }
+        if (policy === "exceptional") {
+            const map2 = { "5": 100, "4": 85, "3": 75, "2": 65, "1": 60, "prep": 50 };
+            return map2[level] || 10;
+        }
+        return 50;
+    }
+
+    function runFairAssignment() {
+        const policyEl = document.getElementById("assignPolicy");
+        const policy = policyEl ? policyEl.value : "by_rank";
+        const arabLevels = ["prep", "1", "2", "3", "4", "5"];
+        const arabTeachers = teachers.filter(function(t) { return t.spec === "arabic"; });
+        const arabGroups = groups.filter(function(g) { return arabLevels.indexOf(g.level) !== -1; });
+
+        if (policy === "normal") {
+            arabGroups.forEach(function(grp, idx) {
+                if (arabTeachers[idx]) grp.teacherId = arabTeachers[idx].id;
+            });
+        } else {
+            const sortedTeachers = arabTeachers.slice().sort(function(a, b) { return rankWeight(a.rank) - rankWeight(b.rank); });
+            const sortedGroups = arabGroups.slice().sort(function(a, b) { return levelWeight(b.level, policy) - levelWeight(a.level, policy); });
+            sortedGroups.forEach(function(grp, idx) {
+                if (sortedTeachers[idx]) grp.teacherId = sortedTeachers[idx].id;
+            });
+        }
+
+        const specMap = { "fr": "french", "en": "english", "tz": "amazigh", "pe": "pe" };
+        groups.forEach(function(grp) {
+            const targetSpec = specMap[grp.level];
+            if (targetSpec) {
+                const spTeacher = teachers.find(function(t) { return t.spec === targetSpec; });
+                if (spTeacher && !grp.teacherId) grp.teacherId = spTeacher.id;
+            }
+        });
+
+        renderTeachersUI();
+        renderGroupsUI();
+        renderA4Sheet();
+    }
+
+    function addTeacher() {
+        const name = document.getElementById("inpTName").value.trim();
+        const rank = document.getElementById("inpTRank").value;
+        const spec = document.getElementById("inpTSpec").value;
+        if (!name) return alert("يرجى إدخال اسم الأستاذ(ة)");
+        teachers.push({ id: "t_" + Date.now(), name: name, rank: rank, spec: spec });
+        document.getElementById("inpTName").value = "";
+        runFairAssignment();
+    }
+
+    function deleteTeacher(id) {
+        teachers = teachers.filter(function(t) { return t.id !== id; });
+        renderTeachersUI();
+        renderGroupsUI();
+        renderA4Sheet();
+    }
+
+    function addGroup() {
+        const level = document.getElementById("inpGLevel").value;
+        const room = document.getElementById("inpGRoom").value.trim() || "01";
+        const newId = "g_" + Date.now();
+        groups.push({ id: newId, level: level, room: room, teacherId: "" });
+        activeGroupId = newId;
+        runFairAssignment();
+    }
+
+    function deleteGroup(id) {
+        if (groups.length <= 1) return alert("يجب الإبقاء على قسم واحد على الأقل.");
+        groups = groups.filter(function(g) { return g.id !== id; });
+        if (activeGroupId === id) activeGroupId = groups[0].id;
+        renderGroupsUI();
+        renderA4Sheet();
+    }
+
+    function changeGroupTeacher(groupId, teacherId) {
+        const g = groups.find(function(x) { return x.id === groupId; });
+        if (g) {
+            g.teacherId = teacherId;
+            renderTeachersUI();
+            renderGroupsUI();
+            renderA4Sheet();
+        }
+    }
+
+    function renderTeachersUI() {
+        const box = document.getElementById("teachersListUI");
+        if (!box) return;
+        box.textContent = "";
+
+        teachers.forEach(function(t) {
+            const grp = groups.find(function(g) { return g.teacherId === t.id; });
+            const model = grp ? MODELS[grp.level] : null;
+            const infoText = model ? (model.levelTitle + " - " + grp.room) : "غير مسند";
+
+            const card = document.createElement("div");
+            card.className = "item-card" + (t.rank === "مميز" ? " rank-top" : "");
+
+            const infoWrap = document.createElement("div");
+
+            const strongName = document.createElement("strong");
+            strongName.textContent = t.name + " ";
+            infoWrap.appendChild(strongName);
+
+            const badgeRank = document.createElement("span");
+            badgeRank.className = "badge-rank " + rankClass(t.rank);
+            badgeRank.textContent = rankDisplayTitle(t.rank);
+            infoWrap.appendChild(badgeRank);
+
+            const subDiv = document.createElement("div");
+            subDiv.style.cssText = "font-size:0.74rem; color:#475569; margin-top:2px;";
+            subDiv.textContent = "المسند: " + infoText;
+            infoWrap.appendChild(subDiv);
+
+            const delBtn = document.createElement("button");
+            delBtn.className = "btn btn-red";
+            delBtn.style.cssText = "padding:3px 8px; font-size:0.72rem;";
+            delBtn.textContent = "حذف";
+            delBtn.onclick = function() { deleteTeacher(t.id); };
+
+            card.appendChild(infoWrap);
+            card.appendChild(delBtn);
+            box.appendChild(card);
+        });
+    }
+
+    function renderGroupsUI() {
+        const box = document.getElementById("groupsListUI");
+        const pills = document.getElementById("groupPillsBar");
+        if (!box || !pills) return;
+
+        box.textContent = "";
+        pills.textContent = "";
+
+        groups.forEach(function(g) {
+            const model = MODELS[g.level];
+            if (!model) return;
+            const tObj = teachers.find(function(t) { return t.id === g.teacherId; });
+
+            const card = document.createElement("div");
+            card.className = "item-card";
+            card.style.flexDirection = "column";
+            card.style.alignItems = "stretch";
+
+            const topRow = document.createElement("div");
+            topRow.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
+
+            const strongTitle = document.createElement("strong");
+            strongTitle.textContent = model.levelTitle + " (" + g.room + ")";
+
+            const spanHours = document.createElement("span");
+            spanHours.style.cssText = "font-size:0.72rem; font-weight:800; color:var(--red-snte);";
+            spanHours.textContent = model.arabicActualHours + " سا";
+
+            topRow.appendChild(strongTitle);
+            topRow.appendChild(spanHours);
+
+            const botRow = document.createElement("div");
+            botRow.style.cssText = "display:flex; gap:6px; margin-top:5px;";
+
+            const sel = document.createElement("select");
+            sel.style.cssText = "padding:4px; font-size:0.78rem;";
+            const defOpt = document.createElement("option");
+            defOpt.value = "";
+            defOpt.textContent = "-- اختر الأستاذ --";
+            sel.appendChild(defOpt);
+
+            teachers.forEach(function(t) {
+                const opt = document.createElement("option");
+                opt.value = t.id;
+                opt.textContent = t.name + " (" + rankDisplayTitle(t.rank) + ")";
+                if (t.id === g.teacherId) opt.selected = true;
+                sel.appendChild(opt);
+            });
+
+            sel.onchange = function() { changeGroupTeacher(g.id, sel.value); };
+
+            const delBtn = document.createElement("button");
+            delBtn.className = "btn btn-red";
+            delBtn.style.cssText = "padding:4px 8px; font-size:0.72rem;";
+            delBtn.textContent = "حذف";
+            delBtn.onclick = function() { deleteGroup(g.id); };
+
+            botRow.appendChild(sel);
+            botRow.appendChild(delBtn);
+
+            card.appendChild(topRow);
+            card.appendChild(botRow);
+            box.appendChild(card);
+
+            const pill = document.createElement("button");
+            pill.className = "level-pill" + (g.id === activeGroupId ? " active" : "");
+            pill.textContent = model.levelTitle + " (" + (tObj ? tObj.name : "غير مسند") + ")";
+            pill.onclick = function() {
+                activeGroupId = g.id;
+                renderGroupsUI();
+                renderA4Sheet();
+            };
+            pills.appendChild(pill);
+        });
+    }
+
+    function syncFromSheet() {
+        document.getElementById("inpWilaya").value = document.getElementById("valWilaya").textContent;
+        document.getElementById("inpDistrict").value = document.getElementById("valDist").textContent;
+        document.getElementById("inpSchool").value = document.getElementById("valSchool").textContent;
+        document.getElementById("inpYear").value = document.getElementById("valYear").textContent;
+        saveInstitutionData();
+    }
+
+    function saveInstitutionData() {
+        try {
+            const data = {
+                wilaya: document.getElementById("inpWilaya").value,
+                district: document.getElementById("inpDistrict").value,
+                school: document.getElementById("inpSchool").value,
+                year: document.getElementById("inpYear").value
+            };
+            localStorage.setItem("snte_timetable_inst_2026", JSON.stringify(data));
+        } catch (e) {}
+    }
+
+    function loadInstitutionData() {
+        try {
+            const raw = localStorage.getItem("snte_timetable_inst_2026");
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            if (data.wilaya) document.getElementById("inpWilaya").value = data.wilaya;
+            if (data.district) document.getElementById("inpDistrict").value = data.district;
+            if (data.school) document.getElementById("inpSchool").value = data.school;
+            if (data.year) document.getElementById("inpYear").value = data.year;
+        } catch (e) {}
+    }
+
+    function handleLogoUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("headerLogoImg").src = e.target.result;
+            document.getElementById("sheetLogoImg").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function renderA4Sheet() {
+        enforceAuthorCopyright();
+        const grp = groups.find(function(g) { return g.id === activeGroupId; }) || groups[0];
+        if (!grp) return;
+
+        const model = MODELS[grp.level];
+        if (!model) return;
+        const tObj = teachers.find(function(t) { return t.id === grp.teacherId; });
+        const lang = model.lang || "ar";
+        const sheet = document.getElementById("printableA4Sheet");
+
+        const wilayaVal = document.getElementById("inpWilaya").value;
+        const distVal = document.getElementById("inpDistrict").value;
+        const schoolVal = document.getElementById("inpSchool").value;
+        const yearVal = document.getElementById("inpYear").value;
+        const teacherText = tObj ? (tObj.name + " (" + rankDisplayTitle(tObj.rank, lang) + ")") : ".........................";
+
+        sheet.setAttribute("dir", (lang === "fr" || lang === "en" || lang === "tz") ? "ltr" : "rtl");
+
+        document.getElementById("lblSystemTitle").textContent = model.systemTitle;
+        document.getElementById("valWilaya").textContent = wilayaVal;
+        document.getElementById("valDist").textContent = distVal;
+        document.getElementById("valSchool").textContent = schoolVal;
+        document.getElementById("valYear").textContent = yearVal;
+        document.getElementById("valTeacher").textContent = teacherText;
+        document.getElementById("valRoom").textContent = grp.room;
+        document.getElementById("valWorkload").textContent = "[" + model.workloadLabel + "]";
+
+        if (lang === "fr") {
+            document.getElementById("lblRepHeading").textContent = "RÉPUBLIQUE ALGÉRIENNE DÉMOCRATIQUE ET POPULAIRE";
+            document.getElementById("lblMinHeading").textContent = "MINISTÈRE DE L’ÉDUCATION NATIONALE";
+            document.getElementById("lblTitleWilaya").textContent = "Direction de l’Éducation : ";
+            document.getElementById("lblTitleInsp").textContent = "Inspection de l’Enseignement Primaire";
+            document.getElementById("lblTitleDist").textContent = "Circonscription : ";
+            document.getElementById("lblTitleSchool").textContent = "École Primaire : ";
+            document.getElementById("lblTitleYear").textContent = "Année Scolaire : ";
+            document.getElementById("lblTitleTeacher").textContent = "Enseignant(e) : ";
+            document.getElementById("lblTitleLevel").textContent = "Matière : ";
+            document.getElementById("valLevel").textContent = "Langue Française";
+            document.getElementById("lblTitleRoom").textContent = "Classes Assignées : ";
+            document.getElementById("sig1").textContent = "Signature de l’Enseignant(e)";
+            document.getElementById("sig2").textContent = "Signature du Directeur / Directrice";
+            document.getElementById("sig3").textContent = "Signature de l’Inspecteur / Inspectrice";
+        } else if (lang === "en") {
+            document.getElementById("lblRepHeading").textContent = "PEOPLE’S DEMOCRATIC REPUBLIC OF ALGERIA";
+            document.getElementById("lblMinHeading").textContent = "MINISTRY OF NATIONAL EDUCATION";
+            document.getElementById("lblTitleWilaya").textContent = "Directorate of Education: ";
+            document.getElementById("lblTitleInsp").textContent = "Primary Education Inspectorate";
+            document.getElementById("lblTitleDist").textContent = "District: ";
+            document.getElementById("lblTitleSchool").textContent = "Primary School: ";
+            document.getElementById("lblTitleYear").textContent = "School Year: ";
+            document.getElementById("lblTitleTeacher").textContent = "Teacher: ";
+            document.getElementById("lblTitleLevel").textContent = "Subject: ";
+            document.getElementById("valLevel").textContent = "English Language";
+            document.getElementById("lblTitleRoom").textContent = "Assigned Classes: ";
+            document.getElementById("sig1").textContent = "Teacher’s Signature";
+            document.getElementById("sig2").textContent = "Headmaster’s Signature";
+            document.getElementById("sig3").textContent = "Inspector’s Signature";
+        } else if (lang === "tz") {
+            document.getElementById("lblRepHeading").textContent = "TAGDUDANT TAZZAYRIT TAMEGDAYT T popularit";
+            document.getElementById("lblMinHeading").textContent = "AƔLIF N USEGMI AƔELNAW";
+            document.getElementById("lblTitleWilaya").textContent = "Tanmehla n Usegmi : ";
+            document.getElementById("lblTitleInsp").textContent = "Tasweḍt n Ulmud Amezwaru";
+            document.getElementById("lblTitleDist").textContent = "Tamnaḍt : ";
+            document.getElementById("lblTitleSchool").textContent = "Aɣerbaz Amezwaru : ";
+            document.getElementById("lblTitleYear").textContent = "Aseggas Aɣurbiz : ";
+            document.getElementById("lblTitleTeacher").textContent = "Aselmad / Taselmadt : ";
+            document.getElementById("lblTitleLevel").textContent = "Tangalt : ";
+            document.getElementById("valLevel").textContent = "Tutlayt Tamaziɣt";
+            document.getElementById("lblTitleRoom").textContent = "Ismilen : ";
+            document.getElementById("sig1").textContent = "Azmul n Uselmad";
+            document.getElementById("sig2").textContent = "Azmul n Unemhal";
+            document.getElementById("sig3").textContent = "Azmul numaswaḍ";
+        } else {
+            document.getElementById("lblRepHeading").textContent = "الجمهورية الجزائرية الديمقراطية الشعبية";
+            document.getElementById("lblMinHeading").textContent = "وزارة التربية الوطنية";
+            document.getElementById("lblTitleWilaya").textContent = "مديرية التربية لولاية : ";
+            document.getElementById("lblTitleInsp").textContent = "مفتشية التعليم الابتدائي";
+            document.getElementById("lblTitleDist").textContent = "مقاطعة : ";
+            document.getElementById("lblTitleSchool").textContent = "المدرسة الابتدائية : ";
+            document.getElementById("lblTitleYear").textContent = "السنة الدراسية : ";
+            document.getElementById("lblTitleTeacher").textContent = "الأستاذ(ة) : ";
+            document.getElementById("lblTitleLevel").textContent = "المستوى / التخصص : ";
+            document.getElementById("valLevel").textContent = model.levelTitle;
+            document.getElementById("lblTitleRoom").textContent = "القسم / الأفواج المسندة : ";
+            document.getElementById("sig1").textContent = "إمضاء الأستاذ (ة)";
+            document.getElementById("sig2").textContent = "إمضاء السيد (ة) المدير (ة)";
+            document.getElementById("sig3").textContent = "إمضاء السيد (ة) المفتش (ة)";
+        }
+
+        const sumTable = document.getElementById("topSummaryTable");
+        sumTable.textContent = "";
+        const theadSum = document.createElement("thead");
+        const tbodySum = document.createElement("tbody");
+        const trH = document.createElement("tr");
+        const trC = document.createElement("tr");
+        const trD = document.createElement("tr");
+
+        model.summaryHeaders.forEach(function(h, i) {
+            const isHi = (i === model.summaryHeaders.length - 1) || (h.indexOf("التعليم الفعلي") !== -1);
+            const th = document.createElement("th");
+            const tdC = document.createElement("td");
+            const tdD = document.createElement("td");
+
+            if (isHi) {
+                th.className = "highlight-col";
+                tdC.className = "highlight-col";
+                tdD.className = "highlight-col";
+            }
+
+            th.contentEditable = "true";
+            tdC.contentEditable = "true";
+            tdD.contentEditable = "true";
+
+            th.textContent = h;
+            tdC.textContent = model.summaryCounts[i];
+            tdD.textContent = model.summaryDurs[i];
+
+            trH.appendChild(th);
+            trC.appendChild(tdC);
+            trD.appendChild(tdD);
+        });
+
+        theadSum.appendChild(trH);
+        tbodySum.appendChild(trC);
+        tbodySum.appendChild(trD);
+        sumTable.appendChild(theadSum);
+        sumTable.appendChild(tbodySum);
+
+        const gridTable = document.getElementById("mainTimetableGrid");
+        gridTable.textContent = "";
+
+        const dayHeaderLabel = lang === "fr" ? "Jours" : (lang === "en" ? "Days" : (lang === "tz" ? "Ussan" : "الأيام"));
+        const breakLabel = lang === "fr" ? "RÉCRÉATION" : (lang === "en" ? "MORNING BREAK" : (lang === "tz" ? "ASGUNFU" : "إستراحــــــــــــة"));
+        const lunchLabel = lang === "fr" ? "PAUSE DÉJEUNER" : (lang === "en" ? "LUNCH BREAK" : (lang === "tz" ? "IMENSI N UZAL" : "الفترة المسائيــــــــة"));
+        const offLabel = lang === "fr"
+            ? "Formation Pédagogique / Coordination & Activités"
+            : (lang === "en" ? "Pedagogical Training / Coordination & Activities" : (lang === "tz" ? "Asileɣ Asensegman / Irmad Idelsanen" : "تكوين / نشاطات ثقافية ورياضية"));
+
+        const theadGrid = document.createElement("thead");
+        const trHours = document.createElement("tr");
+        trHours.className = "hours-header";
+
+        const headersConfig = [
+            { text: dayHeaderLabel, width: "85px" },
+            { text: "08:00 ◄────────► 09:30", width: "27%" },
+            { text: "9:30\n9:45", width: "34px" },
+            { text: "09:45 ◄────────► 11:15", width: "27%" },
+            { text: "11:15\n13:00", width: "34px" },
+            { text: "13:00 ◄────────► 15:00", width: "32%" }
+        ];
+
+        headersConfig.forEach(function(cfg) {
+            const th = document.createElement("th");
+            th.style.width = cfg.width;
+            th.textContent = cfg.text;
+            trHours.appendChild(th);
+        });
+        theadGrid.appendChild(trHours);
+        gridTable.appendChild(theadGrid);
+
+        const tbodyGrid = document.createElement("tbody");
+
+        model.days.forEach(function(dObj, dIdx) {
+            const tr = document.createElement("tr");
+
+            const tdDay = document.createElement("td");
+            tdDay.className = "day-col-cell";
+            tdDay.textContent = dObj.day;
+            tr.appendChild(tdDay);
+
+            const tdM1 = document.createElement("td");
+            tdM1.appendChild(createActivitiesDom(dObj.m1, "d" + dIdx + "_m1"));
+            tr.appendChild(tdM1);
+
+            if (dIdx === 0) {
+                const tdBreak = document.createElement("td");
+                tdBreak.className = "vertical-strip";
+                tdBreak.rowSpan = 5;
+                tdBreak.textContent = breakLabel;
+                tr.appendChild(tdBreak);
+            }
+
+            const tdM2 = document.createElement("td");
+            tdM2.appendChild(createActivitiesDom(dObj.m2, "d" + dIdx + "_m2"));
+            tr.appendChild(tdM2);
+
+            if (dIdx === 0) {
+                const tdLunch = document.createElement("td");
+                tdLunch.className = "vertical-strip";
+                tdLunch.rowSpan = 5;
+                tdLunch.textContent = lunchLabel;
+                tr.appendChild(tdLunch);
+            }
+
+            const tdA1 = document.createElement("td");
+            if (dObj.a1 === "off") {
+                tdA1.className = "bg-off";
+                tdA1.contentEditable = "true";
+                tdA1.textContent = offLabel;
+            } else {
+                tdA1.appendChild(createActivitiesDom(dObj.a1, "d" + dIdx + "_a1"));
+            }
+            tr.appendChild(tdA1);
+
+            tbodyGrid.appendChild(tr);
+        });
+
+        gridTable.appendChild(tbodyGrid);
+        bindDragSwap();
+    }
+
+    function createActivitiesDom(arr, prefix) {
+        const flexDiv = document.createElement("div");
+        flexDiv.className = "activities-flex";
+
+        arr.forEach(function(item, idx) {
+            const w = item.w || "w-30";
+            const c = item.c || "bg-arab";
+            const box = document.createElement("div");
+            box.className = "act-box " + w + " " + c;
+            box.draggable = true;
+            box.id = "act_" + prefix + "_" + idx;
+
+            const nameDiv = document.createElement("div");
+            nameDiv.className = "act-name";
+            nameDiv.contentEditable = "true";
+            nameDiv.textContent = item.t;
+
+            const timeDiv = document.createElement("div");
+            timeDiv.className = "act-time";
+            timeDiv.contentEditable = "true";
+            timeDiv.textContent = item.d;
+
+            box.appendChild(nameDiv);
+            box.appendChild(timeDiv);
+            flexDiv.appendChild(box);
+        });
+
+        return flexDiv;
+    }
+
+    function bindDragSwap() {
+        document.querySelectorAll(".act-box").forEach(function(box) {
+            box.ondragstart = function(e) { e.dataTransfer.setData("text/plain", box.id); };
+            box.ondragover = function(e) { e.preventDefault(); };
+            box.ondrop = function(e) {
+                e.preventDefault();
+                const srcId = e.dataTransfer.getData("text/plain");
+                const srcEl = document.getElementById(srcId);
+                if (srcEl && srcEl !== box) {
+                    const nameA = box.querySelector(".act-name").textContent;
+                    const timeA = box.querySelector(".act-time").textContent;
+                    const nameB = srcEl.querySelector(".act-name").textContent;
+                    const timeB = srcEl.querySelector(".act-time").textContent;
+
+                    box.querySelector(".act-name").textContent = nameB;
+                    box.querySelector(".act-time").textContent = timeB;
+                    srcEl.querySelector(".act-name").textContent = nameA;
+                    srcEl.querySelector(".act-time").textContent = timeA;
+                }
+            };
+        });
+    }
+
+    function exportLandscapePDF() {
+        enforceAuthorCopyright();
+        const sheet = document.getElementById("printableA4Sheet");
+        const grp = groups.find(function(g) { return g.id === activeGroupId; });
+        const title = grp ? MODELS[grp.level].levelTitle : "ابتدائي";
+        const opt = {
+            margin: [3, 3, 3, 3],
+            filename: "استعمال_الزمن_" + title.replace(/\s+/g, "_") + "_إعداد_الأستاذ_حميدي_البشير_2026.pdf",
+            image: { type: "jpeg", quality: 0.99 },
+            html2canvas: { scale: 2.2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }
+        };
+        html2pdf().set(opt).from(sheet).save();
+    }
+
+    function initApp() {
+        const hLogo = document.getElementById("headerLogoImg");
+        const sLogo = document.getElementById("sheetLogoImg");
+        if (hLogo) {
+            hLogo.onerror = function() { this.onerror = null; this.src = FALLBACK_LOGO; };
+            hLogo.src = "Gemini_Generated_Image_x3qnu3x3qnu3x3qn.jpg";
+        }
+        if (sLogo) {
+            sLogo.onerror = function() { this.onerror = null; this.src = FALLBACK_LOGO; };
+            sLogo.src = "Gemini_Generated_Image_x3qnu3x3qnu3x3qn.jpg";
+        }
+
+        enforceAuthorCopyright();
+        setInterval(enforceAuthorCopyright, 1500);
+
+        loadInstitutionData();
+        runFairAssignment();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initApp);
+    } else {
+        initApp();
+    }
+</script>
+
+</body>
+</html>

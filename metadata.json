@@ -1,0 +1,6 @@
+{
+  "name": "منصة المدير الرقمية - منظومة التوقيت الآلي والإسناد العادل",
+  "description": "منصة المدير للتعليم الابتدائي وفق المرسوم التنفيذي 25-54 مع منظومة التوقيت الآلي والإسناد العادل - إعداد الأستاذ حميدي البشير (S.N.T.E)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
