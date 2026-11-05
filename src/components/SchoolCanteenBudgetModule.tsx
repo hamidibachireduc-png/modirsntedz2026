@@ -13,9 +13,25 @@ import {
   PackageCheck,
   ShieldCheck,
   CalendarRange,
+  BarChart3,
+  AlertTriangle,
 } from 'lucide-react';
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Bar,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ReferenceLine,
+  Cell,
+} from 'recharts';
 import { OFFICIAL_AUTHOR_SIGNATURE } from '../data/timetableModels';
 import { exportElementToPDF, triggerPrintOrPdf } from '../utils/printAndPdf';
+import { SchoolStage } from './OrdonnateurFinancialModule';
 
 export interface DailyMealRecord {
   id: string;
@@ -75,8 +91,8 @@ export const INITIAL_CANTEEN_CONFIG: CanteenBudgetConfig = {
   registeredStudentsCount: 185,
   municipalityContributionDzd: 850000,
   stateGrantDzd: 1600000,
-  canteenManagerName: 'ع. بن سالم (مسير المطعم)',
-  suppliersInfo: 'مؤسسة التموين الغذائي المعتمدة لدى البلدية',
+  canteenManagerName: 'ع. بن سالم (مسير المطعم / المقتصد)',
+  suppliersInfo: 'مؤسسة التموين الغذائي المعتمدة',
 };
 
 export const INITIAL_DAILY_MEALS: DailyMealRecord[] = [
@@ -143,12 +159,12 @@ export const INITIAL_DAILY_MEALS: DailyMealRecord[] = [
 ];
 
 const INITIAL_BENEFICIARIES_LIST: CanteenBeneficiaryStudent[] = [
-  { id: 'bs1', fullName: 'بوزيد محمد الأمين', levelTitle: 'السنة الأولى ابتدائي', socialCategory: 'معوز', guardianName: 'بوزيد عبد القادر', healthAllergyNote: 'لا توجد حساسية غذائية' },
-  { id: 'bs2', fullName: 'رحماني آية سلسبيل', levelTitle: 'السنة الثانية ابتدائي', socialCategory: 'يتيم', guardianName: 'رحماني فاطمة', healthAllergyNote: 'لا توجد حساسية غذائية' },
-  { id: 'bs3', fullName: 'عيساوي عبد الرحمن', levelTitle: 'السنة الثالثة ابتدائي', socialCategory: 'بعد المسافة', guardianName: 'عيساوي لخضر', healthAllergyNote: 'لا توجد حساسية غذائية' },
-  { id: 'bs4', fullName: 'عماري مريم البتول', levelTitle: 'السنة الرابعة ابتدائي', socialCategory: 'ذوي الدخل الضعيف', guardianName: 'عماري بلقاسم', healthAllergyNote: 'تجنب الحليب غير المبستر' },
-  { id: 'bs5', fullName: 'خليفي ياسين', levelTitle: 'السنة الخامسة ابتدائي', socialCategory: 'معوز', guardianName: 'خليفي المختار', healthAllergyNote: 'لا توجد حساسية غذائية' },
-  { id: 'bs6', fullName: 'تومي سارة', levelTitle: 'التربية التحضيرية', socialCategory: 'ذوي الدخل الضعيف', guardianName: 'تومي كمال', healthAllergyNote: 'لا توجد حساسية غذائية' },
+  { id: 'bs1', fullName: 'بوزيد محمد الأمين', levelTitle: 'السنة الأولى', socialCategory: 'معوز', guardianName: 'بوزيد عبد القادر', healthAllergyNote: 'لا توجد حساسية غذائية' },
+  { id: 'bs2', fullName: 'رحماني آية سلسبيل', levelTitle: 'السنة الثانية', socialCategory: 'يتيم', guardianName: 'رحماني فاطمة', healthAllergyNote: 'لا توجد حساسية غذائية' },
+  { id: 'bs3', fullName: 'عيساوي عبد الرحمن', levelTitle: 'السنة الثالثة', socialCategory: 'بعد المسافة', guardianName: 'عيساوي لخضر', healthAllergyNote: 'لا توجد حساسية غذائية' },
+  { id: 'bs4', fullName: 'عماري مريم البتول', levelTitle: 'السنة الرابعة', socialCategory: 'ذوي الدخل الضعيف', guardianName: 'عماري بلقاسم', healthAllergyNote: 'تجنب الحليب غير المبستر' },
+  { id: 'bs5', fullName: 'خليفي ياسين', levelTitle: 'السنة الخامسة / النهائي', socialCategory: 'معوز', guardianName: 'خليفي المختار', healthAllergyNote: 'لا توجد حساسية غذائية' },
+  { id: 'bs6', fullName: 'تومي سارة', levelTitle: 'قسم تحضيري / أولى', socialCategory: 'ذوي الدخل الضعيف', guardianName: 'تومي كمال', healthAllergyNote: 'لا توجد حساسية غذائية' },
 ];
 
 const INITIAL_STOCK_ITEMS: CanteenStockItem[] = [
@@ -167,6 +183,7 @@ const INITIAL_HYGIENE_WORKERS: CanteenHygieneCheck[] = [
 ];
 
 interface SchoolCanteenBudgetModuleProps {
+  schoolStage?: SchoolStage;
   institution: {
     wilaya: string;
     district: string;
@@ -183,6 +200,7 @@ interface SchoolCanteenBudgetModuleProps {
 }
 
 export default function SchoolCanteenBudgetModule({
+  schoolStage = 'primary',
   institution,
   logoUrl,
   totalSchoolStudents,
@@ -191,10 +209,19 @@ export default function SchoolCanteenBudgetModule({
   dailyMeals,
   setDailyMeals,
 }: SchoolCanteenBudgetModuleProps) {
-  const [subTab, setSubTab] = useState<'budget_meals' | 'weekly_menu' | 'beneficiaries' | 'stock' | 'hygiene'>(
-    'budget_meals'
-  );
+  const [subTab, setSubTab] = useState<
+    'budget_meals' | 'meal_calculator' | 'weekly_menu' | 'beneficiaries' | 'stock' | 'hygiene'
+  >('budget_meals');
   const sheetRef = useRef<HTMLDivElement>(null);
+
+  // Interactive Daily Meal Budget & Consumption Calculator State
+  const [calcMode, setCalcMode] = useState<'from_records' | 'custom_simulation'>('custom_simulation');
+  const [simDailyMealsServed, setSimDailyMealsServed] = useState<number>(
+    canteenConfig.registeredStudentsCount || 180
+  );
+  const [simDaysCount, setSimDaysCount] = useState<number>(20); // مثلاً 20 يوم دراسة في الشهر
+  const [simUnitCostDzd, setSimUnitCostDzd] = useState<number>(canteenConfig.defaultUnitCostDzd || 95);
+  const [simExtraExpensesDzd, setSimExtraExpensesDzd] = useState<number>(0); // مصاريف إضافية (خبز/وقود/نقل إن وجدت)
 
   // Add Daily Meal State
   const [newMealDate, setNewMealDate] = useState('2026-10-25');
@@ -208,7 +235,7 @@ export default function SchoolCanteenBudgetModule({
   // Beneficiaries List State
   const [beneficiariesList, setBeneficiariesList] = useState<CanteenBeneficiaryStudent[]>(INITIAL_BENEFICIARIES_LIST);
   const [newStudentName, setNewStudentName] = useState('');
-  const [newStudentLevel, setNewStudentLevel] = useState('السنة الأولى ابتدائي');
+  const [newStudentLevel, setNewStudentLevel] = useState('السنة الأولى');
   const [newStudentCat, setNewStudentCat] = useState<CanteenBeneficiaryStudent['socialCategory']>('معوز');
   const [newStudentGuardian, setNewStudentGuardian] = useState('');
 
@@ -222,7 +249,7 @@ export default function SchoolCanteenBudgetModule({
   // Hygiene & Workers State
   const [hygieneWorkers] = useState<CanteenHygieneCheck[]>(INITIAL_HYGIENE_WORKERS);
 
-  // Calculations
+  // Calculations from Actual Daily Records
   const totalMealsServed = dailyMeals.reduce((sum, r) => sum + r.actualBeneficiaries, 0);
   const totalRegisteredSum = dailyMeals.reduce((sum, r) => sum + r.registeredBeneficiaries, 0);
   const attendanceRate =
@@ -251,6 +278,127 @@ export default function SchoolCanteenBudgetModule({
     canteenConfig.registeredStudentsCount > 0
       ? Math.floor(estimatedRemainingMealsCapacity / canteenConfig.registeredStudentsCount)
       : 0;
+
+  // Calculations for Interactive Meal Budget Calculator
+  const calcTotalActualMeals =
+    calcMode === 'from_records' ? totalMealsServed : simDailyMealsServed * simDaysCount;
+  const calcEffectiveUnitCost =
+    calcMode === 'from_records' ? canteenConfig.defaultUnitCostDzd : simUnitCostDzd;
+  const calcDailyExpenditure =
+    calcMode === 'from_records'
+      ? avgDailyBeneficiaries * canteenConfig.defaultUnitCostDzd
+      : simDailyMealsServed * simUnitCostDzd;
+  const calcTotalConsumedDzd =
+    (calcMode === 'from_records' ? totalConsumedCostDzd : calcTotalActualMeals * simUnitCostDzd) +
+    simExtraExpensesDzd;
+  const calcRemainingBudgetDzd = Math.max(
+    0,
+    canteenConfig.allocatedBudgetDzd - calcTotalConsumedDzd
+  );
+  const calcDeficitDzd = Math.max(0, calcTotalConsumedDzd - canteenConfig.allocatedBudgetDzd);
+  const calcConsumptionPercent =
+    canteenConfig.allocatedBudgetDzd > 0
+      ? Number(((calcTotalConsumedDzd / canteenConfig.allocatedBudgetDzd) * 100).toFixed(2))
+      : 0;
+  const calcAdditionalMealsPossible =
+    calcEffectiveUnitCost > 0 ? Math.floor(calcRemainingBudgetDzd / calcEffectiveUnitCost) : 0;
+  const calcAdditionalDaysPossible =
+    (calcMode === 'from_records' ? avgDailyBeneficiaries : simDailyMealsServed) > 0
+      ? Math.floor(
+          calcAdditionalMealsPossible /
+            Math.max(1, calcMode === 'from_records' ? avgDailyBeneficiaries : simDailyMealsServed)
+        )
+      : 0;
+
+  const canteenSystemTitle =
+    schoolStage === 'primary'
+      ? 'المطعم المدرسي (التعليم الابتدائي)'
+      : schoolStage === 'middle'
+      ? 'النظام نصف الداخلي والداخلي (المتوسطة)'
+      : 'النظام نصف الداخلي والداخلي (الثانوية)';
+
+  // Monthly Budget Consumption Tracking (9 School Months: September -> May)
+  const [chartViewMode, setChartViewMode] = useState<'cumulative_vs_total' | 'monthly_vs_ceiling'>(
+    'cumulative_vs_total'
+  );
+  const [monthlyMealsPlan, setMonthlyMealsPlan] = useState<
+    { id: string; monthName: string; schoolDays: number; avgBeneficiaries: number }[]
+  >([
+    { id: 'm1', monthName: 'سبتمبر', schoolDays: 12, avgBeneficiaries: 175 },
+    { id: 'm2', monthName: 'أكتوبر', schoolDays: 21, avgBeneficiaries: 182 },
+    { id: 'm3', monthName: 'نوفمبر', schoolDays: 20, avgBeneficiaries: 185 },
+    { id: 'm4', monthName: 'ديسمبر', schoolDays: 15, avgBeneficiaries: 184 },
+    { id: 'm5', monthName: 'جانفي', schoolDays: 18, avgBeneficiaries: 185 },
+    { id: 'm6', monthName: 'فيفري', schoolDays: 20, avgBeneficiaries: 186 },
+    { id: 'm7', monthName: 'مارس', schoolDays: 16, avgBeneficiaries: 185 },
+    { id: 'm8', monthName: 'أفريل', schoolDays: 21, avgBeneficiaries: 192 },
+    { id: 'm9', monthName: 'ماي', schoolDays: 20, avgBeneficiaries: 195 },
+  ]);
+
+  const effectiveUnitCostForChart =
+    subTab === 'meal_calculator' && calcMode === 'custom_simulation'
+      ? simUnitCostDzd
+      : canteenConfig.defaultUnitCostDzd || 95;
+
+  const monthlyBudgetCeiling = Math.round(canteenConfig.allocatedBudgetDzd / 9);
+
+  const monthlyChartData = (() => {
+    let runningCumulative = 0;
+    return monthlyMealsPlan.map((m) => {
+      const mealsCount = m.schoolDays * m.avgBeneficiaries;
+      const monthlyConsumed = mealsCount * effectiveUnitCostForChart;
+      runningCumulative += monthlyConsumed;
+
+      const isCumulativeDeficit = runningCumulative > canteenConfig.allocatedBudgetDzd;
+      const isMonthlyDeficit = monthlyConsumed > monthlyBudgetCeiling;
+      const isDeficit =
+        chartViewMode === 'cumulative_vs_total'
+          ? isCumulativeDeficit || isMonthlyDeficit
+          : isMonthlyDeficit || isCumulativeDeficit;
+
+      const cumulativeDeficitDzd = Math.max(
+        0,
+        runningCumulative - canteenConfig.allocatedBudgetDzd
+      );
+      const monthlyDeficitDzd = Math.max(0, monthlyConsumed - monthlyBudgetCeiling);
+
+      return {
+        id: m.id,
+        month: m.monthName,
+        schoolDays: m.schoolDays,
+        avgBeneficiaries: m.avgBeneficiaries,
+        mealsCount,
+        monthlyConsumed,
+        cumulativeConsumed: runningCumulative,
+        allocatedTotal: canteenConfig.allocatedBudgetDzd,
+        monthlyCeiling: monthlyBudgetCeiling,
+        isCumulativeDeficit,
+        isMonthlyDeficit,
+        isDeficit,
+        cumulativeDeficitDzd,
+        monthlyDeficitDzd,
+      };
+    });
+  })();
+
+  const totalAnnualProjectedConsumed =
+    monthlyChartData[monthlyChartData.length - 1]?.cumulativeConsumed || 0;
+  const totalAnnualDeficitDzd = Math.max(
+    0,
+    totalAnnualProjectedConsumed - canteenConfig.allocatedBudgetDzd
+  );
+  const deficitMonthsList = monthlyChartData.filter((d) => d.isDeficit).map((d) => d.month);
+
+  const handleUpdateMonthPlan = (
+    id: string,
+    field: 'schoolDays' | 'avgBeneficiaries',
+    val: string
+  ) => {
+    const num = Math.max(0, Number(val) || 0);
+    setMonthlyMealsPlan((prev) =>
+      prev.map((m) => (m.id === id ? { ...m, [field]: num } : m))
+    );
+  };
 
   const handleAddDailyMeal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -345,10 +493,12 @@ export default function SchoolCanteenBudgetModule({
         <div>
           <h2 className="text-lg font-black text-[#094d22] flex items-center gap-2">
             <Utensils className="w-5 h-5 text-[#117a37]" />
-            <span>منظومة تسيير المطعم المدرسي الشاملة (الميزانية · الوجبات · المستفيدون · المخزون · النظافة)</span>
+            <span>
+              منظومة تسيير {canteenSystemTitle} وحاسبة ميزانية الوجبات اليومية
+            </span>
           </h2>
           <p className="text-xs text-slate-600 mt-1">
-            قسم مستقل ومتكامل لتسيير المطعم المدرسي وفق أحكام المرسوم التنفيذي 18-03 مع حساب آلي للتكلفة اليومية والميزانية ومخرجات A4/PDF
+            قسم متكامل لتسيير الإطعام المدرسي، حاسبة استهلاك الميزانية بناءً على الوجبات المقدمة فعلياً وتكلفتها مقابل الاعتماد الكلي، جرد المخزون، والرقابة الصحية
           </p>
         </div>
 
@@ -387,23 +537,28 @@ export default function SchoolCanteenBudgetModule({
             icon: <Coins className="w-3.5 h-3.5" />,
           },
           {
+            id: 'meal_calculator',
+            label: '2. حاسبة ميزانية الوجبات اليومية واستهلاك الاعتماد',
+            icon: <Calculator className="w-3.5 h-3.5 text-[#d91424]" />,
+          },
+          {
             id: 'weekly_menu',
-            label: '2. الجدول الغذائي الأسبوعي المعتمد',
+            label: '3. الجدول الغذائي الأسبوعي المعتمد',
             icon: <CalendarRange className="w-3.5 h-3.5" />,
           },
           {
             id: 'beneficiaries',
-            label: '3. قائمة التلاميذ المستفيدين من الإطعام',
+            label: '4. قائمة التلاميذ المستفيدين من الإطعام',
             icon: <Users className="w-3.5 h-3.5" />,
           },
           {
             id: 'stock',
-            label: '4. جرد المخزون الغذائي والتموين',
+            label: '5. جرد المخزون الغذائي والتموين',
             icon: <PackageCheck className="w-3.5 h-3.5" />,
           },
           {
             id: 'hygiene',
-            label: '5. الرقابة الصحية والطبق الشاهد والعمال',
+            label: '6. الرقابة الصحية والطبق الشاهد والعمال',
             icon: <ShieldCheck className="w-3.5 h-3.5" />,
           },
         ].map((tab) => (
@@ -413,6 +568,8 @@ export default function SchoolCanteenBudgetModule({
             className={`px-3.5 py-2 rounded-lg text-xs font-extrabold cursor-pointer transition flex items-center gap-1.5 ${
               subTab === tab.id
                 ? 'bg-[#117a37] text-white shadow-xs'
+                : tab.id === 'meal_calculator'
+                ? 'bg-amber-50 border border-amber-300 text-[#094d22] hover:bg-amber-100'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
@@ -432,7 +589,7 @@ export default function SchoolCanteenBudgetModule({
           <div className="text-xl font-black text-[#094d22] mt-1.5 tabular-nums">
             {canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">إعانة الدولة + مساهمة البلدية</div>
+          <div className="text-[11px] text-slate-500 mt-1">إعانة الدولة + مساهمة البلدية/العائلات</div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs">
@@ -444,13 +601,13 @@ export default function SchoolCanteenBudgetModule({
             {avgDailyBeneficiaries} / {canteenConfig.registeredStudentsCount} تلميذ
           </div>
           <div className="text-[11px] text-slate-600 mt-1 tabular-nums">
-            نسبة الحضور في المطعم: {attendanceRate}% (من أصل {totalSchoolStudents} بالمدرسة)
+            نسبة الحضور في المطعم: {attendanceRate}% (من أصل {totalSchoolStudents} بالمؤسسة)
           </div>
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-xs text-slate-500 font-bold">
-            <span>مجموع الوجبات المقدمة</span>
+            <span>مجموع الوجبات المقدمة فعلياً</span>
             <Utensils className="w-4 h-4 text-amber-600" />
           </div>
           <div className="text-xl font-black text-slate-900 mt-1.5 tabular-nums">
@@ -487,6 +644,546 @@ export default function SchoolCanteenBudgetModule({
           </div>
         </div>
       </div>
+
+      {/* RECHARTS MONTHLY BUDGET CONSUMPTION VS ALLOCATED BUDGET CHART (WITH RED DEFICIT HIGHLIGHTING) */}
+      {(subTab === 'budget_meals' || subTab === 'meal_calculator') && (
+        <div className="no-print bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-3">
+            <div>
+              <h3 className="text-base font-black text-[#094d22] flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-[#117a37]" />
+                <span>
+                  الرسم البياني لاستهلاك الميزانية شهرياً مقارنة بالميزانية المخصصة الكلية (مع تلوين فترات العجز بالأحمر)
+                </span>
+              </h3>
+              <p className="text-xs text-slate-600 mt-0.5">
+                تحليل بياني تفاعلي عبر مكتبة Recharts يقارن استهلاك الوجبات على مدار الأشهر التسعة مع سقف الميزانية الكلية ({canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج) ويلون تلقائياً أشهر العجز باللون الأحمر
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => setChartViewMode('cumulative_vs_total')}
+                className={`px-3 py-1.5 rounded-lg font-extrabold cursor-pointer transition ${
+                  chartViewMode === 'cumulative_vs_total'
+                    ? 'bg-[#094d22] text-white'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                الاستهلاك التراكمي مقابل الميزانية الكلية
+              </button>
+              <button
+                type="button"
+                onClick={() => setChartViewMode('monthly_vs_ceiling')}
+                className={`px-3 py-1.5 rounded-lg font-extrabold cursor-pointer transition ${
+                  chartViewMode === 'monthly_vs_ceiling'
+                    ? 'bg-[#117a37] text-white'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                الاستهلاك الشهري مقابل السقف الشهري ({monthlyBudgetCeiling.toLocaleString('ar-DZ')} دج)
+              </button>
+            </div>
+          </div>
+
+          {/* Alert Banner if Deficit Months Exist */}
+          {deficitMonthsList.length > 0 ? (
+            <div className="bg-rose-50 border-2 border-[#d91424] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2.5">
+                <AlertTriangle className="w-5 h-5 text-[#d91424] shrink-0" />
+                <div>
+                  <span className="font-black text-[#d91424]">
+                    تنبيه فترات العجز المالي الملونة بالأحمر ({deficitMonthsList.join(' · ')}):
+                  </span>{' '}
+                  <span className="font-bold text-slate-800">
+                    إجمالي الاستهلاك السنوي المقدر ({totalAnnualProjectedConsumed.toLocaleString('ar-DZ')} دج) يتجاوز الميزانية المخصصة الكلية ({canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج) بعجز مالي قدره{' '}
+                    <b className="text-[#d91424]">{totalAnnualDeficitDzd.toLocaleString('ar-DZ')} دج</b>.
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#117a37] text-white font-black text-[11px]">
+                  أخضر: ضمن الاعتماد المخصص
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#d91424] text-white font-black text-[11px]">
+                  أحمر: فترة عجز مالي (تجاوز الميزانية)
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-emerald-50 border border-[#117a37] rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="font-black text-[#094d22]">
+                جميع الأشهر الدراسية التسعة متوازنة مالياً وضمن حدود الميزانية المخصصة الكلية ({canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج).
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  setCanteenConfig((prev) => ({
+                    ...prev,
+                    allocatedBudgetDzd: Math.max(1000000, Math.round(totalAnnualProjectedConsumed * 0.82)),
+                  }))
+                }
+                className="px-3 py-1 rounded bg-[#d91424] text-white font-bold cursor-pointer"
+              >
+                معاينة سيناريو العجز المالي (بالأحمر)
+              </button>
+            </div>
+          )}
+
+          {/* Recharts Container */}
+          <div className="w-full h-[360px] bg-slate-50/70 border border-slate-200 rounded-xl p-3" dir="ltr">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart
+                data={monthlyChartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" />
+                <XAxis
+                  dataKey="month"
+                  tick={{ fill: '#0f172a', fontSize: 12, fontWeight: 800 }}
+                />
+                <YAxis
+                  tickFormatter={(val: number) => `${Math.round(val / 1000)}k`}
+                  tick={{ fill: '#0f172a', fontSize: 11, fontWeight: 700 }}
+                />
+                <Tooltip
+                  formatter={(value) => `${Number(value ?? 0).toLocaleString('ar-DZ')} دج`}
+                  labelFormatter={(label) => `شهر ${String(label ?? '')}`}
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    border: '2px solid #094d22',
+                    borderRadius: '10px',
+                    direction: 'rtl',
+                    textAlign: 'right',
+                    fontWeight: 800,
+                    fontSize: '12px',
+                  }}
+                />
+                <Legend
+                  wrapperStyle={{
+                    paddingTop: '8px',
+                    fontSize: '12px',
+                    fontWeight: 800,
+                  }}
+                />
+
+                {chartViewMode === 'cumulative_vs_total' ? (
+                  <>
+                    <ReferenceLine
+                      y={canteenConfig.allocatedBudgetDzd}
+                      stroke="#d91424"
+                      strokeWidth={2.5}
+                      strokeDasharray="6 4"
+                      label={{
+                        value: `سقف الميزانية المخصصة الكلية (${canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج)`,
+                        position: 'top',
+                        fill: '#d91424',
+                        fontSize: 12,
+                        fontWeight: 900,
+                      }}
+                    />
+                    <Bar
+                      dataKey="cumulativeConsumed"
+                      name="الاستهلاك التراكمي للميزانية (أحمر = فترة عجز)"
+                      radius={[6, 6, 0, 0]}
+                      barSize={38}
+                    >
+                      {monthlyChartData.map((entry) => (
+                        <Cell
+                          key={entry.id}
+                          fill={
+                            entry.isCumulativeDeficit
+                              ? '#d91424'
+                              : entry.cumulativeConsumed > canteenConfig.allocatedBudgetDzd * 0.85
+                              ? '#d97706'
+                              : '#117a37'
+                          }
+                        />
+                      ))}
+                    </Bar>
+                    <Line
+                      type="monotone"
+                      dataKey="allocatedTotal"
+                      name="خط الميزانية المخصصة الكلية"
+                      stroke="#0f172a"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ReferenceLine
+                      y={monthlyBudgetCeiling}
+                      stroke="#d91424"
+                      strokeWidth={2.5}
+                      strokeDasharray="6 4"
+                      label={{
+                        value: `الحصة الشهرية المرجعية (${monthlyBudgetCeiling.toLocaleString('ar-DZ')} دج)`,
+                        position: 'top',
+                        fill: '#d91424',
+                        fontSize: 12,
+                        fontWeight: 900,
+                      }}
+                    />
+                    <Bar
+                      dataKey="monthlyConsumed"
+                      name="الاستهلاك المالي الشهري (أحمر = عجز شهري)"
+                      radius={[6, 6, 0, 0]}
+                      barSize={38}
+                    >
+                      {monthlyChartData.map((entry) => (
+                        <Cell
+                          key={entry.id}
+                          fill={
+                            entry.isMonthlyDeficit || entry.isCumulativeDeficit
+                              ? '#d91424'
+                              : '#117a37'
+                          }
+                        />
+                      ))}
+                    </Bar>
+                    <Line
+                      type="monotone"
+                      dataKey="monthlyCeiling"
+                      name="السقف الشهري المخصص"
+                      stroke="#0f172a"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </>
+                )}
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Interactive Monthly Table to Adjust Meals / Days and Observe Deficit Coloring */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-right border-collapse text-xs">
+              <thead>
+                <tr className="bg-slate-100 border-y border-slate-300 text-[#094d22] font-black">
+                  <th className="py-2 px-2.5">الشهر الدراسي</th>
+                  <th className="py-2 px-2.5 text-center">أيام الإطعام</th>
+                  <th className="py-2 px-2.5 text-center">المستفيدون/يوم</th>
+                  <th className="py-2 px-2.5 text-center">مجموع الوجبات</th>
+                  <th className="py-2 px-2.5 text-center">الاستهلاك الشهري (دج)</th>
+                  <th className="py-2 px-2.5 text-center">الاستهلاك التراكمي (دج)</th>
+                  <th className="py-2 px-2.5 text-center">الوضعية مقارنة بالميزانية الكلية</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200">
+                {monthlyChartData.map((row) => (
+                  <tr
+                    key={row.id}
+                    className={
+                      row.isCumulativeDeficit || row.isMonthlyDeficit
+                        ? 'bg-rose-50/90 font-bold'
+                        : 'hover:bg-slate-50'
+                    }
+                  >
+                    <td className="py-2 px-2.5 font-black text-slate-900">{row.month}</td>
+                    <td className="py-2 px-2.5 text-center">
+                      <input
+                        type="number"
+                        min={1}
+                        max={26}
+                        value={row.schoolDays}
+                        onChange={(e) =>
+                          handleUpdateMonthPlan(row.id, 'schoolDays', e.target.value)
+                        }
+                        className="w-16 px-1.5 py-0.5 border border-slate-300 rounded bg-white text-center font-bold tabular-nums"
+                      />
+                    </td>
+                    <td className="py-2 px-2.5 text-center">
+                      <input
+                        type="number"
+                        min={1}
+                        value={row.avgBeneficiaries}
+                        onChange={(e) =>
+                          handleUpdateMonthPlan(row.id, 'avgBeneficiaries', e.target.value)
+                        }
+                        className="w-20 px-1.5 py-0.5 border border-slate-300 rounded bg-white text-center font-bold tabular-nums"
+                      />
+                    </td>
+                    <td className="py-2 px-2.5 text-center font-bold tabular-nums">
+                      {row.mealsCount.toLocaleString('ar-DZ')} وجبة
+                    </td>
+                    <td
+                      className={`py-2 px-2.5 text-center font-black tabular-nums ${
+                        row.isMonthlyDeficit ? 'text-[#d91424]' : 'text-[#094d22]'
+                      }`}
+                    >
+                      {row.monthlyConsumed.toLocaleString('ar-DZ')} دج
+                    </td>
+                    <td
+                      className={`py-2 px-2.5 text-center font-black tabular-nums ${
+                        row.isCumulativeDeficit ? 'text-[#d91424]' : 'text-slate-900'
+                      }`}
+                    >
+                      {row.cumulativeConsumed.toLocaleString('ar-DZ')} دج
+                    </td>
+                    <td className="py-2 px-2.5 text-center">
+                      {row.isCumulativeDeficit ? (
+                        <span className="px-2.5 py-0.5 rounded bg-[#d91424] text-white text-[11px] font-black inline-block">
+                          عجز تراكمي: -{row.cumulativeDeficitDzd.toLocaleString('ar-DZ')} دج
+                        </span>
+                      ) : row.isMonthlyDeficit ? (
+                        <span className="px-2.5 py-0.5 rounded bg-rose-600 text-white text-[11px] font-black inline-block">
+                          تجاوز السقف الشهري بـ {row.monthlyDeficitDzd.toLocaleString('ar-DZ')} دج
+                        </span>
+                      ) : (
+                        <span className="px-2.5 py-0.5 rounded bg-emerald-100 text-[#094d22] text-[11px] font-black inline-block">
+                          متوازن (وفر: {(canteenConfig.allocatedBudgetDzd - row.cumulativeConsumed).toLocaleString('ar-DZ')} دج)
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: حاسبة ميزانية الوجبات اليومية واستهلاك الاعتماد المالي */}
+      {subTab === 'meal_calculator' && (
+        <div className="no-print bg-white border-2 border-[#117a37] rounded-xl p-5 shadow-xs space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-3">
+            <div>
+              <h3 className="text-base font-black text-[#094d22] flex items-center gap-2">
+                <Calculator className="w-5 h-5 text-[#d91424]" />
+                <span>
+                  حاسبة ميزانية الوجبات اليومية واستهلاك الميزانية (مقابل الميزانية المخصصة الكلية)
+                </span>
+              </h3>
+              <p className="text-xs text-slate-600 mt-0.5">
+                حساب دقيق لاستهلاك الميزانية بناءً على عدد الوجبات المقدمة فعلياً وتكلفة الوجبة الواحدة ومقارنتها الفورية مع الميزانية المخصصة الكلية للمؤسسة
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => setCalcMode('custom_simulation')}
+                className={`px-3 py-1.5 rounded-lg font-extrabold cursor-pointer ${
+                  calcMode === 'custom_simulation'
+                    ? 'bg-[#094d22] text-white'
+                    : 'bg-slate-100 text-slate-700'
+                }`}
+              >
+                حساب حر (إدخال عدد الوجبات والأيام)
+              </button>
+              <button
+                type="button"
+                onClick={() => setCalcMode('from_records')}
+                className={`px-3 py-1.5 rounded-lg font-extrabold cursor-pointer ${
+                  calcMode === 'from_records'
+                    ? 'bg-[#d91424] text-white'
+                    : 'bg-slate-100 text-slate-700'
+                }`}
+              >
+                حساب آلي من سجل الوجبات اليومية ({totalMealsServed} وجبة)
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            {/* Inputs Panel */}
+            <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3.5 text-xs">
+              <div className="font-black text-[#094d22] border-b border-slate-200 pb-2">
+                مدخلات حاسبة ميزانية الوجبات اليومية:
+              </div>
+
+              <div>
+                <label className="block font-extrabold text-slate-700 mb-1">
+                  1. الميزانية المخصصة الكلية للمطعم (الاعتماد الكلي بالدينار):
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  step={10000}
+                  value={canteenConfig.allocatedBudgetDzd}
+                  onChange={(e) =>
+                    setCanteenConfig((prev) => ({
+                      ...prev,
+                      allocatedBudgetDzd: Math.max(0, Number(e.target.value) || 0),
+                    }))
+                  }
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-black text-sm text-[#094d22] tabular-nums"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-extrabold text-slate-700 mb-1">
+                    2. عدد الوجبات المقدمة فعلياً في اليوم:
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    disabled={calcMode === 'from_records'}
+                    value={calcMode === 'from_records' ? avgDailyBeneficiaries : simDailyMealsServed}
+                    onChange={(e) => setSimDailyMealsServed(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-black text-[#117a37] tabular-nums"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-extrabold text-slate-700 mb-1">
+                    3. عدد أيام الإطعام الفعلية:
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={220}
+                    disabled={calcMode === 'from_records'}
+                    value={calcMode === 'from_records' ? dailyMeals.length : simDaysCount}
+                    onChange={(e) => setSimDaysCount(Math.max(1, Number(e.target.value) || 1))}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-black text-slate-900 tabular-nums"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                <span className="text-[11px] font-bold text-slate-500 self-center">فترات سريعة:</span>
+                {[
+                  { label: 'يوم واحد (1)', days: 1 },
+                  { label: 'أسبوع (5 أيام)', days: 5 },
+                  { label: 'شهر (20 يوماً)', days: 20 },
+                  { label: 'فصل (60 يوماً)', days: 60 },
+                  { label: 'سنة دراسية (160 يوماً)', days: 160 },
+                ].map((preset) => (
+                  <button
+                    key={preset.days}
+                    type="button"
+                    onClick={() => {
+                      setCalcMode('custom_simulation');
+                      setSimDaysCount(preset.days);
+                    }}
+                    className={`px-2 py-1 rounded text-[11px] font-bold cursor-pointer ${
+                      calcMode === 'custom_simulation' && simDaysCount === preset.days
+                        ? 'bg-[#117a37] text-white'
+                        : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-extrabold text-slate-700 mb-1">
+                    4. تكلفة الوجبة اليومية الواحدة (دج):
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    disabled={calcMode === 'from_records'}
+                    value={calcEffectiveUnitCost}
+                    onChange={(e) => setSimUnitCostDzd(Math.max(1, Number(e.target.value) || 0))}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-black text-[#d91424] tabular-nums"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-extrabold text-slate-700 mb-1">
+                    5. نفقات تموين إضافية (اختياري):
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={500}
+                    value={simExtraExpensesDzd}
+                    onChange={(e) => setSimExtraExpensesDzd(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white font-bold tabular-nums"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Results & Budget Comparison Panel */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div className="bg-emerald-50 border border-[#117a37]/30 rounded-xl p-4">
+                  <div className="text-[11px] font-extrabold text-[#094d22]">
+                    مجموع الوجبات المقدمة فعلياً
+                  </div>
+                  <div className="text-2xl font-black text-[#117a37] mt-1 tabular-nums">
+                    {calcTotalActualMeals.toLocaleString('ar-DZ')} وجبة
+                  </div>
+                  <div className="text-[11px] text-slate-600 mt-1 tabular-nums">
+                    التكلفة اليومية: {calcDailyExpenditure.toLocaleString('ar-DZ')} دج/يوم
+                  </div>
+                </div>
+
+                <div className="bg-rose-50 border border-rose-200 rounded-xl p-4">
+                  <div className="text-[11px] font-extrabold text-rose-900">
+                    إجمالي استهلاك الميزانية الفعلي
+                  </div>
+                  <div className="text-2xl font-black text-[#d91424] mt-1 tabular-nums">
+                    {calcTotalConsumedDzd.toLocaleString('ar-DZ')} دج
+                  </div>
+                  <div className="text-[11px] text-rose-800 font-bold mt-1 tabular-nums">
+                    نسبة الاستهلاك: {calcConsumptionPercent}% من الكلي
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 text-white rounded-xl p-4">
+                  <div className="text-[11px] font-extrabold text-yellow-300">
+                    الرصيد المتبقي من الميزانية الكلية
+                  </div>
+                  <div className="text-2xl font-black mt-1 tabular-nums">
+                    {calcRemainingBudgetDzd.toLocaleString('ar-DZ')} دج
+                  </div>
+                  <div className="text-[11px] text-emerald-200 mt-1 tabular-nums">
+                    يكفي لـ {calcAdditionalMealsPossible.toLocaleString('ar-DZ')} وجبة ({calcAdditionalDaysPossible} يوم)
+                  </div>
+                </div>
+              </div>
+
+              {/* Visual Progress Bar vs Total Allocated Budget */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-black">
+                  <span className="text-[#094d22]">
+                    مؤشر استهلاك الميزانية مقابل الاعتماد المالي المخصص الكلي ({canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج)
+                  </span>
+                  <span
+                    className={`tabular-nums ${
+                      calcDeficitDzd > 0 ? 'text-[#d91424]' : 'text-[#117a37]'
+                    }`}
+                  >
+                    {calcConsumptionPercent}%
+                  </span>
+                </div>
+                <div className="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full transition-all ${
+                      calcDeficitDzd > 0
+                        ? 'bg-[#d91424]'
+                        : calcConsumptionPercent > 80
+                        ? 'bg-amber-500'
+                        : 'bg-[#117a37]'
+                    }`}
+                    style={{ width: `${Math.min(100, Math.max(2, calcConsumptionPercent))}%` }}
+                  />
+                </div>
+                {calcDeficitDzd > 0 ? (
+                  <div className="text-xs font-black text-[#d91424]">
+                    تنبيه مالي: إجمالي تكلفة الوجبات يتجاوز الميزانية المخصصة الكلية بعجز قدره{' '}
+                    {calcDeficitDzd.toLocaleString('ar-DZ')} دج (يتطلب طلب اعتماد مالي إضافي).
+                  </div>
+                ) : (
+                  <div className="text-xs font-bold text-[#094d22]">
+                    الوضعية المالية متوازنة: الوفر المتاح يغطي {calcAdditionalDaysPossible} يوم إطعام إضافي بنفس وتيرة الاستهلاك الفعلي.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* SUB-TAB 1: الميزانية والوجبات اليومية والتكلفة */}
       {subTab === 'budget_meals' && (
@@ -565,7 +1262,7 @@ export default function SchoolCanteenBudgetModule({
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">
-                    مسير المطعم / المستشار المكلف
+                    مسير المطعم / المقتصد
                   </label>
                   <input
                     type="text"
@@ -601,7 +1298,7 @@ export default function SchoolCanteenBudgetModule({
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">
-                    مساهمة ميزانية البلدية (دج)
+                    مساهمة البلدية / العائلات (دج)
                   </label>
                   <input
                     type="number"
@@ -872,7 +1569,7 @@ export default function SchoolCanteenBudgetModule({
         </>
       )}
 
-      {/* SUB-TAB 2: الجدول الغذائي الأسبوعي المعتمد */}
+      {/* SUB-TAB 3: الجدول الغذائي الأسبوعي المعتمد */}
       {subTab === 'weekly_menu' && (
         <div className="no-print bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
           <h3 className="text-sm font-black text-[#094d22]">
@@ -907,13 +1604,13 @@ export default function SchoolCanteenBudgetModule({
         </div>
       )}
 
-      {/* SUB-TAB 3: قائمة التلاميذ المستفيدين من الإطعام */}
+      {/* SUB-TAB 4: قائمة التلاميذ المستفيدين من الإطعام */}
       {subTab === 'beneficiaries' && (
         <div className="no-print bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h3 className="text-sm font-black text-[#094d22]">
-                القائمة الاسمية للتلاميذ المستفيدين من المطعم المدرسي ({canteenConfig.registeredStudentsCount} تلميذ مسجل)
+                القائمة الاسمية للتلاميذ المستفيدين من الإطعام ({canteenConfig.registeredStudentsCount} تلميذ مسجل)
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 تصنيف المستفيدين حسب الحالة الاجتماعية والصحية (معوز · يتيم · بعد المسافة · ذوي الدخل الضعيف)
@@ -932,18 +1629,13 @@ export default function SchoolCanteenBudgetModule({
               onChange={(e) => setNewStudentName(e.target.value)}
               className="px-3 py-2 border border-slate-300 rounded-lg font-bold bg-white"
             />
-            <select
+            <input
+              type="text"
+              placeholder="المستوى / القسم..."
               value={newStudentLevel}
               onChange={(e) => setNewStudentLevel(e.target.value)}
               className="px-3 py-2 border border-slate-300 rounded-lg font-bold bg-white"
-            >
-              <option value="التربية التحضيرية">التربية التحضيرية</option>
-              <option value="السنة الأولى ابتدائي">السنة الأولى ابتدائي</option>
-              <option value="السنة الثانية ابتدائي">السنة الثانية ابتدائي</option>
-              <option value="السنة الثالثة ابتدائي">السنة الثالثة ابتدائي</option>
-              <option value="السنة الرابعة ابتدائي">السنة الرابعة ابتدائي</option>
-              <option value="السنة الخامسة ابتدائي">السنة الخامسة ابتدائي</option>
-            </select>
+            />
             <select
               value={newStudentCat}
               onChange={(e) => setNewStudentCat(e.target.value as CanteenBeneficiaryStudent['socialCategory'])}
@@ -1010,11 +1702,11 @@ export default function SchoolCanteenBudgetModule({
         </div>
       )}
 
-      {/* SUB-TAB 4: جرد المخزون الغذائي والتموين */}
+      {/* SUB-TAB 5: جرد المخزون الغذائي والتموين */}
       {subTab === 'stock' && (
         <div className="no-print bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
           <h3 className="text-sm font-black text-[#094d22]">
-            بطاقة جرد ومراقبة مخزون المواد الغذائية وحركة التموين بالمطعم المدرسي
+            بطاقة جرد ومراقبة مخزون المواد الغذائية وحركة التموين بالمطعم
           </h3>
 
           <form
@@ -1119,7 +1811,7 @@ export default function SchoolCanteenBudgetModule({
         </div>
       )}
 
-      {/* SUB-TAB 5: الرقابة الصحية والطبق الشاهد والعمال */}
+      {/* SUB-TAB 6: الرقابة الصحية والطبق الشاهد والعمال */}
       {subTab === 'hygiene' && (
         <div className="no-print bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
           <h3 className="text-sm font-black text-[#094d22]">
@@ -1158,9 +1850,9 @@ export default function SchoolCanteenBudgetModule({
           <div className="sheet-header-grid">
             <div className="sheet-right-col">
               <div>مديرية التربية لولاية : {institution.wilaya}</div>
-              <div>مقاطعة التفتيش : {institution.district}</div>
-              <div>المدرسة الابتدائية : {institution.school}</div>
-              <div>مسير المطعم : {canteenConfig.canteenManagerName}</div>
+              <div>المقاطعة : {institution.district}</div>
+              <div>المؤسسة : {institution.school}</div>
+              <div>مسير المطعم / المقتصد : {canteenConfig.canteenManagerName}</div>
             </div>
 
             <div className="sheet-center-col">
@@ -1170,16 +1862,16 @@ export default function SchoolCanteenBudgetModule({
                 <img src={logoUrl} alt="SNTE" />
                 <div className="title-frame-text">
                   <span className="main-doc-title">
-                    {subTab === 'budget_meals' &&
-                      'الكشف الرسمي لمتابعة الوجبات اليومية والوضعية المالية للمطعم المدرسي'}
+                    {(subTab === 'budget_meals' || subTab === 'meal_calculator') &&
+                      `الكشف الرسمي لمتابعة الوجبات اليومية وحاسبة الميزانية — ${canteenSystemTitle}`}
                     {subTab === 'weekly_menu' &&
-                      'الجدول الغذائي الأسبوعي الرسمي المعتمد للمطعم المدرسي'}
+                      `الجدول الغذائي الأسبوعي الرسمي المعتمد — ${canteenSystemTitle}`}
                     {subTab === 'beneficiaries' &&
-                      'القائمة الاسمية الرسمية للتلاميذ المستفيدين من المطعم المدرسي'}
+                      `القائمة الاسمية الرسمية للتلاميذ المستفيدين من الإطعام`}
                     {subTab === 'stock' &&
-                      'بطاقة الجرد الرسمي للمخزون الغذائي وحركة التموين بالمطعم المدرسي'}
+                      `بطاقة الجرد الرسمي للمخزون الغذائي وحركة التموين`}
                     {subTab === 'hygiene' &&
-                      'سجل الرقابة الصحية والنظافة والمتابعة الطبية لأعوان المطعم المدرسي'}
+                      `سجل الرقابة الصحية والنظافة والمتابعة الطبية لأعوان الإطعام`}
                   </span>
                 </div>
               </div>
@@ -1188,7 +1880,7 @@ export default function SchoolCanteenBudgetModule({
             <div className="sheet-left-col">
               <div>السنة الدراسية : {institution.year}</div>
               <div>المدير(ة) : {institution.directorName}</div>
-              <div>المرجع : المرسوم التنفيذي 18-03</div>
+              <div>الطور : {canteenSystemTitle}</div>
               <div className="text-[11px] text-[#094d22]">{OFFICIAL_AUTHOR_SIGNATURE}</div>
             </div>
           </div>
@@ -1196,13 +1888,13 @@ export default function SchoolCanteenBudgetModule({
           {/* Summary Financial Bar inside Print Sheet */}
           <div className="grid grid-cols-5 gap-2 my-2 text-center text-[11px] font-black">
             <div className="border border-black p-1.5 bg-[#f8fafc]">
-              <div>الميزانية المخصصة للمطعم</div>
+              <div>الميزانية المخصصة الكلية</div>
               <div className="text-xs text-[#094d22] tabular-nums">
                 {canteenConfig.allocatedBudgetDzd.toLocaleString('ar-DZ')} دج
               </div>
             </div>
             <div className="border border-black p-1.5 bg-[#f8fafc]">
-              <div>عدد التلاميذ المسجلين بالمطعم</div>
+              <div>عدد التلاميذ المسجلين</div>
               <div className="text-xs text-[#094d22] tabular-nums">
                 {canteenConfig.registeredStudentsCount} تلميذ
               </div>
@@ -1210,24 +1902,24 @@ export default function SchoolCanteenBudgetModule({
             <div className="border border-black p-1.5 bg-[#f8fafc]">
               <div>مجموع الوجبات المقدمة فعلياً</div>
               <div className="text-xs text-[#094d22] tabular-nums">
-                {totalMealsServed} وجبة ({attendanceRate}%)
+                {subTab === 'meal_calculator' ? calcTotalActualMeals : totalMealsServed} وجبة
               </div>
             </div>
             <div className="border border-black p-1.5 bg-[#fff1f2]">
               <div>التكلفة الإجمالية المستهلكة</div>
               <div className="text-xs text-[#d91424] tabular-nums">
-                {totalConsumedCostDzd.toLocaleString('ar-DZ')} دج
+                {(subTab === 'meal_calculator' ? calcTotalConsumedDzd : totalConsumedCostDzd).toLocaleString('ar-DZ')} دج
               </div>
             </div>
             <div className="border border-black p-1.5 bg-[#f0fdf4]">
               <div>الرصيد المالي المتبقي</div>
               <div className="text-xs text-[#094d22] tabular-nums">
-                {remainingBudgetDzd.toLocaleString('ar-DZ')} دج
+                {(subTab === 'meal_calculator' ? calcRemainingBudgetDzd : remainingBudgetDzd).toLocaleString('ar-DZ')} دج
               </div>
             </div>
           </div>
 
-          {(subTab === 'budget_meals' || subTab === 'weekly_menu') && (
+          {(subTab === 'budget_meals' || subTab === 'meal_calculator' || subTab === 'weekly_menu') && (
             <table className="timetable-grid mt-1">
               <thead>
                 <tr className="hours-header">
@@ -1383,9 +2075,9 @@ export default function SchoolCanteenBudgetModule({
           )}
 
           <div className="footer-signatures mt-5">
-            <div>إمضاء مسير المطعم المدرسي</div>
-            <div>إمضاء وختم السيد(ة) مدير(ة) المدرسة</div>
-            <div>مصادقة مصالح البلدية / التغذية المدرسية</div>
+            <div>إمضاء مسير المطعم / المقتصد</div>
+            <div>إمضاء وختم السيد(ة) مدير(ة) المؤسسة</div>
+            <div>مصادقة مصالح البلدية / الوصاية</div>
           </div>
         </div>
       </div>

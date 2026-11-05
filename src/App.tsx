@@ -23,6 +23,7 @@ import {
   BarChart3,
   Utensils,
   ClipboardList,
+  Landmark,
 } from 'lucide-react';
 import {
   MODELS,
@@ -65,10 +66,12 @@ import SchoolCanteenBudgetModule, {
   INITIAL_DAILY_MEALS,
 } from './components/SchoolCanteenBudgetModule';
 import BriefInquiryRegistryModule from './components/BriefInquiryRegistryModule';
+import OrdonnateurFinancialModule, { SchoolStage } from './components/OrdonnateurFinancialModule';
 import { exportElementToPDF, triggerPrintOrPdf } from './utils/printAndPdf';
 
 export type SectionId =
   | 'dashboard'
+  | 'ordonnateur'
   | 'brief_inquiry'
   | 'canteen_budget'
   | 'timetable'
@@ -135,6 +138,15 @@ const INITIAL_CLASS_VISITS: ClassVisitRecord[] = [
 ];
 
 export default function App() {
+  const [schoolStage, setSchoolStage] = useState<SchoolStage>(() => {
+    try {
+      const saved = localStorage.getItem('snte_director_stage_2026');
+      if (saved === 'primary' || saved === 'middle' || saved === 'high') return saved;
+    } catch {
+      // ignore
+    }
+    return 'primary';
+  });
   const [activeSection, setActiveSection] = useState<SectionId>('dashboard');
   const [adminSubTab, setAdminSubTab] = useState<'accounts' | 'school_admin' | 'backup'>('accounts');
   const [logoUrl, setLogoUrl] = useState<string>(() => createSnteLogoDataUrl());
@@ -143,6 +155,54 @@ export default function App() {
   const [assignPolicy, setAssignPolicy] = useState<string>('by_rank');
   const [backupMessage, setBackupMessage] = useState<string | null>(null);
   const dashboardPdfRef = useRef<HTMLDivElement>(null);
+
+  const handleStageSwitch = (nextStage: SchoolStage) => {
+    setSchoolStage(nextStage);
+    try {
+      localStorage.setItem('snte_director_stage_2026', nextStage);
+    } catch {
+      // ignore
+    }
+    // في التعليم المتوسط والثانوي، التوقيت الآلي من اختصاص الناظر / مستشار التربية وليس المدير
+    if (nextStage !== 'primary' && activeSection === 'timetable') {
+      setActiveSection('ordonnateur');
+    }
+  };
+
+  const stageLabels: Record<
+    SchoolStage,
+    {
+      shortName: string;
+      institutionPrefix: string;
+      directorTitle: string;
+      inspectorateTitle: string;
+      timetableNote: string;
+    }
+  > = {
+    primary: {
+      shortName: 'الطور الابتدائي',
+      institutionPrefix: 'المدرسة الابتدائية',
+      directorTitle: 'مدير المدرسة الابتدائية',
+      inspectorateTitle: 'مفتشية التعليم الابتدائي',
+      timetableNote: 'منظومة التوقيت الآلي والإسناد مفعلة (من اختصاص مدير الابتدائي)',
+    },
+    middle: {
+      shortName: 'الطور المتوسط (متوسطة)',
+      institutionPrefix: 'المتوسطة',
+      directorTitle: 'مدير المتوسطة — آمر بالصرف رئيسي',
+      inspectorateTitle: 'مفتشية التعليم المتوسط',
+      timetableNote: 'التوقيت الآلي مخفي في المتوسطة (من اختصاص مستشار التربية) · صفة الآمر بالصرف مفعلة',
+    },
+    high: {
+      shortName: 'الطور الثانوي (ثانوية)',
+      institutionPrefix: 'الثانوية',
+      directorTitle: 'مدير الثانوية — آمر بالصرف رئيسي',
+      inspectorateTitle: 'مفتشية التربية الوطنية',
+      timetableNote: 'التوقيت الآلي مخفي في الثانوية (من اختصاص الناظر) · صفة الآمر بالصرف مفعلة',
+    },
+  };
+
+  const currentStageMeta = stageLabels[schoolStage];
 
   const [institution, setInstitution] = useState(() => {
     try {
@@ -396,6 +456,7 @@ export default function App() {
     const payload = {
       version: '2026.25.54',
       exportedAt: new Date().toISOString(),
+      schoolStage,
       institution,
       teachers,
       groups,
@@ -430,6 +491,9 @@ export default function App() {
     reader.onload = (ev) => {
       try {
         const parsed = JSON.parse(String(ev.target?.result || '{}'));
+        if (parsed.schoolStage === 'primary' || parsed.schoolStage === 'middle' || parsed.schoolStage === 'high') {
+          setSchoolStage(parsed.schoolStage);
+        }
         if (parsed.institution) setInstitution(parsed.institution);
         if (Array.isArray(parsed.teachers)) setTeachers(parsed.teachers);
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
@@ -532,11 +596,35 @@ export default function App() {
     );
   };
 
-  const WORKSPACE_SECTIONS: { id: SectionId; label: string; icon: React.ReactNode }[] = [
+  const ALL_WORKSPACE_SECTIONS: { id: SectionId; label: string; icon: React.ReactNode }[] = [
     { id: 'dashboard', label: 'الداشبورد الإحصائي الشامل', icon: <LayoutDashboard className="w-3.5 h-3.5" /> },
+    ...(schoolStage !== 'primary'
+      ? [
+          {
+            id: 'ordonnateur' as SectionId,
+            label: 'صفة الآمر بالصرف والميزانية والتوثيق المحاسبي',
+            icon: <Landmark className="w-3.5 h-3.5 text-amber-300" />,
+          },
+        ]
+      : []),
     { id: 'brief_inquiry', label: 'سجل الاستقصاء الوجيز', icon: <ClipboardList className="w-3.5 h-3.5" /> },
-    { id: 'canteen_budget', label: 'قسم المطعم المدرسي الشامل', icon: <Utensils className="w-3.5 h-3.5" /> },
-    { id: 'timetable', label: 'منظومة التوقيت الآلي', icon: <CalendarClock className="w-3.5 h-3.5" /> },
+    {
+      id: 'canteen_budget',
+      label:
+        schoolStage === 'primary'
+          ? 'قسم المطعم المدرسي وحاسبة الوجبات'
+          : 'النظام نصف الداخلي وحاسبة الوجبات',
+      icon: <Utensils className="w-3.5 h-3.5" />,
+    },
+    ...(schoolStage === 'primary'
+      ? [
+          {
+            id: 'timetable' as SectionId,
+            label: 'منظومة التوقيت الآلي',
+            icon: <CalendarClock className="w-3.5 h-3.5" />,
+          },
+        ]
+      : []),
     { id: 'staff', label: 'قسم الموظفين (المردودية · الفائض · الزيارات)', icon: <Scale className="w-3.5 h-3.5" /> },
     { id: 'director_bag', label: 'حقيبة المدير والسجلات الـ 12 (الصادر والوارد)', icon: <Briefcase className="w-3.5 h-3.5" /> },
     { id: 'performance', label: 'لوحة الأداء التربوي', icon: <TrendingUp className="w-3.5 h-3.5" /> },
@@ -545,6 +633,15 @@ export default function App() {
     { id: 'councils', label: 'قسم المجالس', icon: <Users className="w-3.5 h-3.5" /> },
     { id: 'legislation', label: 'التشريع والمهام', icon: <BookOpen className="w-3.5 h-3.5" /> },
     { id: 'simulator', label: 'محاكي الترقية والرواتب والدرجات', icon: <Calculator className="w-3.5 h-3.5" /> },
+    ...(schoolStage === 'primary'
+      ? [
+          {
+            id: 'ordonnateur' as SectionId,
+            label: 'توثيق الآمر بالصرف (المتوسط/الثانوي)',
+            icon: <Landmark className="w-3.5 h-3.5" />,
+          },
+        ]
+      : []),
     { id: 'admin_accounts', label: 'حسابات الموظفين', icon: <KeyRound className="w-3.5 h-3.5" /> },
     { id: 'pedagogical', label: 'الخريطة التربوية والأفواج', icon: <School className="w-3.5 h-3.5" /> },
     { id: 'documents', label: 'المناوبة والمحاضر', icon: <FileCheck2 className="w-3.5 h-3.5" /> },
@@ -577,16 +674,31 @@ export default function App() {
           >
             الداشبورد والاستقصاء
           </button>
-          <button
-            onClick={() => setActiveSection('timetable')}
-            className={`transition-colors whitespace-nowrap shrink-0 cursor-pointer pb-0.5 border-b-2 ${
-              activeSection === 'timetable'
-                ? 'text-[#fef08a] border-[#e6b85c]'
-                : 'text-white/85 border-transparent hover:text-white'
-            }`}
-          >
-            منظومة التوقيت الآلي
-          </button>
+
+          {schoolStage === 'primary' ? (
+            <button
+              onClick={() => setActiveSection('timetable')}
+              className={`transition-colors whitespace-nowrap shrink-0 cursor-pointer pb-0.5 border-b-2 ${
+                activeSection === 'timetable'
+                  ? 'text-[#fef08a] border-[#e6b85c]'
+                  : 'text-white/85 border-transparent hover:text-white'
+              }`}
+            >
+              منظومة التوقيت الآلي
+            </button>
+          ) : (
+            <button
+              onClick={() => setActiveSection('ordonnateur')}
+              className={`transition-colors whitespace-nowrap shrink-0 cursor-pointer pb-0.5 border-b-2 ${
+                activeSection === 'ordonnateur'
+                  ? 'text-[#fef08a] border-[#e6b85c]'
+                  : 'text-amber-200 border-transparent hover:text-white'
+              }`}
+            >
+              الآمر بالصرف والميزانية
+            </button>
+          )}
+
           <button
             onClick={() => setActiveSection('staff')}
             className={`transition-colors whitespace-nowrap shrink-0 cursor-pointer pb-0.5 border-b-2 ${
@@ -630,10 +742,43 @@ export default function App() {
         </div>
       </header>
 
+      {/* Educational Stage Switcher Bar (الابتدائي · المتوسط · الثانوي) */}
+      <div className="no-print bg-[#0f172a] text-white border-b border-slate-700">
+        <div className="max-w-[1560px] mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-black text-amber-300">الطور التعليمي المعتمد بالمنصة:</span>
+            {(
+              [
+                { id: 'primary', label: 'الطور الابتدائي (مدرسة ابتدائية)' },
+                { id: 'middle', label: 'الطور المتوسط (متوسطة — آمر بالصرف)' },
+                { id: 'high', label: 'الطور الثانوي (ثانوية — آمر بالصرف)' },
+              ] as const
+            ).map((st) => (
+              <button
+                key={st.id}
+                onClick={() => handleStageSwitch(st.id)}
+                className={`px-3 py-1 rounded-lg font-extrabold cursor-pointer transition ${
+                  schoolStage === st.id
+                    ? 'bg-[#e6b85c] text-slate-950 shadow-xs'
+                    : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
+                }`}
+              >
+                {st.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-300">
+            <span>الخصوصية التنظيمية للطور:</span>
+            <span className="text-white">{currentStageMeta.timetableNote}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Secondary Workspace Section Switcher */}
       <div className="no-print bg-white border-b border-slate-200 shadow-2xs">
         <div className="max-w-[1560px] mx-auto px-4 py-2.5 flex items-center gap-1.5 overflow-x-auto">
-          {WORKSPACE_SECTIONS.map((sec) => {
+          {ALL_WORKSPACE_SECTIONS.map((sec) => {
             const isActive =
               activeSection === sec.id ||
               (sec.id === 'backup' && activeSection === 'admin_accounts' && adminSubTab === 'backup');
@@ -667,6 +812,16 @@ export default function App() {
 
       {/* Main Content Container */}
       <main className="flex-1 max-w-[1560px] w-full mx-auto px-4 py-5">
+        {/* SECTION: صفة الآمر بالصرف والتسيير المالي والتوثيق المحاسبي (للمتوسط والثانوي) */}
+        {activeSection === 'ordonnateur' && (
+          <OrdonnateurFinancialModule
+            schoolStage={schoolStage}
+            institution={institution}
+            logoUrl={logoUrl}
+            onSwitchStage={handleStageSwitch}
+          />
+        )}
+
         {/* SECTION: سجل الاستقصاء الوجيز */}
         {activeSection === 'brief_inquiry' && (
           <BriefInquiryRegistryModule
@@ -681,6 +836,7 @@ export default function App() {
         {/* SECTION: قسم المطعم المدرسي المستقل والشامل */}
         {activeSection === 'canteen_budget' && (
           <SchoolCanteenBudgetModule
+            schoolStage={schoolStage}
             institution={institution}
             logoUrl={logoUrl}
             totalSchoolStudents={totalStudents}
@@ -691,8 +847,8 @@ export default function App() {
           />
         )}
 
-        {/* SECTION: منظومة التوقيت الآلي (بدون معاينة HTML المرفق وبدون مربع الانخراط) */}
-        {activeSection === 'timetable' && (
+        {/* SECTION: منظومة التوقيت الآلي (خاص بالطور الابتدائي فقط لأنها في المتوسط والثانوي من اختصاص الناظر / مستشار التربية) */}
+        {activeSection === 'timetable' && schoolStage === 'primary' && (
           <AutomatedTimetableSystem
             institution={institution}
             setInstitution={setInstitution}
@@ -720,7 +876,9 @@ export default function App() {
             setTeachers={setTeachers}
             groups={groups}
             logoUrl={logoUrl}
-            onGoToTimetable={() => setActiveSection('timetable')}
+            onGoToTimetable={() =>
+              setActiveSection(schoolStage === 'primary' ? 'timetable' : 'ordonnateur')
+            }
             rendementScores={rendementScores}
             setRendementScores={setRendementScores}
             annualEvals={annualEvals}
@@ -851,15 +1009,15 @@ export default function App() {
                 </div>
                 <div>
                   <div className="text-xs font-extrabold text-yellow-200 mb-1">
-                    النقابة الوطنية لعمال التربية (S.N.T.E) · اللجنة الوطنية للتربية والبيداغوجيا
+                    النقابة الوطنية لعمال التربية (S.N.T.E) · {currentStageMeta.shortName} · {currentStageMeta.directorTitle}
                   </div>
                   <h1 className="text-xl md:text-2xl font-black">
-                    منصة المدير الرقمية والداشبورد الإحصائي الشامل — {institution.school}
+                    منصة المدير الرقمية ({currentStageMeta.institutionPrefix}: {institution.school})
                   </h1>
                   <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-white/95 font-bold">
                     <span>مديرية التربية لولاية: {institution.wilaya}</span>
                     <span>·</span>
-                    <span>مقاطعة التفتيش: {institution.district}</span>
+                    <span>{currentStageMeta.inspectorateTitle}: {institution.district}</span>
                     <span>·</span>
                     <span>السنة الدراسية: {institution.year}</span>
                     <span>·</span>
@@ -910,16 +1068,29 @@ export default function App() {
                 </div>
               </div>
 
-              <div
-                onClick={() => setActiveSection('timetable')}
-                className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs cursor-pointer hover:border-[#117a37] transition"
-              >
-                <div className="text-[11px] font-bold text-slate-500">التوقيت الآلي والإسناد</div>
-                <div className="text-2xl font-black text-[#117a37] mt-1 tabular-nums">{assignmentPercent}%</div>
-                <div className="text-[11px] text-slate-600 mt-1 tabular-nums">
-                  {assignedCount}/{groups.length} أقسام · {totalWeeklyHours} سا/أسبوع
+              {schoolStage === 'primary' ? (
+                <div
+                  onClick={() => setActiveSection('timetable')}
+                  className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs cursor-pointer hover:border-[#117a37] transition"
+                >
+                  <div className="text-[11px] font-bold text-slate-500">التوقيت الآلي والإسناد</div>
+                  <div className="text-2xl font-black text-[#117a37] mt-1 tabular-nums">{assignmentPercent}%</div>
+                  <div className="text-[11px] text-slate-600 mt-1 tabular-nums">
+                    {assignedCount}/{groups.length} أقسام · {totalWeeklyHours} سا/أسبوع
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div
+                  onClick={() => setActiveSection('ordonnateur')}
+                  className="bg-amber-50/70 border-2 border-amber-300 rounded-xl p-4 shadow-xs cursor-pointer hover:border-[#094d22] transition"
+                >
+                  <div className="text-[11px] font-black text-amber-900">صفة الآمر بالصرف والميزانية</div>
+                  <div className="text-2xl font-black text-[#094d22] mt-1 tabular-nums">8,750,000 دج</div>
+                  <div className="text-[11px] text-slate-700 font-bold mt-1">
+                    تنفيذ الأبواب والحوالات ومراقبة الصندوق
+                  </div>
+                </div>
+              )}
 
               <div
                 onClick={() => setActiveSection('brief_inquiry')}
@@ -1106,20 +1277,39 @@ export default function App() {
 
             {/* Quick Navigation Cards to All Sections */}
             <div className="no-print grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5">
-              <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-black text-[#094d22] mb-1.5">01. منظومة التوقيت الآلي</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-3">
-                    إعداد جداول التوقيت الأسبوعي والإسناد الآلي حسب الرتبة مع تحميل PDF A4 أفقي.
-                  </p>
+              {schoolStage === 'primary' ? (
+                <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-sm font-black text-[#094d22] mb-1.5">01. منظومة التوقيت الآلي</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                      إعداد جداول التوقيت الأسبوعي والإسناد الآلي حسب الرتبة مع تحميل PDF A4 أفقي.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setActiveSection('timetable')}
+                    className="w-full py-2 bg-[#117a37] hover:bg-[#094d22] text-white font-extrabold text-xs rounded-lg transition cursor-pointer"
+                  >
+                    فتح منظومة التوقيت الآلي
+                  </button>
                 </div>
-                <button
-                  onClick={() => setActiveSection('timetable')}
-                  className="w-full py-2 bg-[#117a37] hover:bg-[#094d22] text-white font-extrabold text-xs rounded-lg transition cursor-pointer"
-                >
-                  فتح منظومة التوقيت الآلي
-                </button>
-              </div>
+              ) : (
+                <div className="bg-amber-50/70 border-2 border-amber-300 rounded-xl p-4 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-sm font-black text-[#094d22] mb-1.5">
+                      01. صفة الآمر بالصرف والميزانية
+                    </h3>
+                    <p className="text-xs text-slate-700 leading-relaxed mb-3">
+                      متابعة أبواب الميزانية، سندات الطلب، حوالات الدفع، ومراقبة الصندوق (التوقيت من اختصاص الناظر/المستشار).
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setActiveSection('ordonnateur')}
+                    className="w-full py-2 bg-[#094d22] hover:bg-[#117a37] text-white font-extrabold text-xs rounded-lg transition cursor-pointer"
+                  >
+                    فتح قسم الآمر بالصرف والميزانية
+                  </button>
+                </div>
+              )}
 
               <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
                 <div>
